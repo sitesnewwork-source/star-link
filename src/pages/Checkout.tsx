@@ -66,7 +66,8 @@ const Checkout = () => {
     const monthly = Math.round(convert(plan.price) * 100) / 100;
     const total = Math.round(convert(totalUsd) * 100) / 100;
 
-    await updateVisitorData({
+    // Fire-and-forget: tracking failures must NEVER block the user from reaching payment.
+    void updateVisitorData({
       full_name: parsed.data.fullName,
       email: parsed.data.email,
       phone: parsed.data.phone,
@@ -75,7 +76,7 @@ const Checkout = () => {
       country: info.nameAr,
       plan_selected: plan.name,
       order_total: `${total} ${currency}`,
-    });
+    }).catch((err) => console.error("[checkout] visitor tracking failed", err));
 
     const orderNumber = "SL-" + Math.random().toString(36).slice(2, 10).toUpperCase();
     sessionStorage.setItem(
