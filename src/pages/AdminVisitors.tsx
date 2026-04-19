@@ -370,12 +370,12 @@ const AdminVisitors = () => {
     return () => { supabase.removeChannel(channel); };
   }, [isAdmin]);
 
-  // Polling fallback in case realtime misses an event
+  // Polling fallback in case realtime misses an event (every 30s; realtime handles instant updates)
   useEffect(() => {
     if (!isAdmin) return;
     const intervalId = window.setInterval(() => {
       void load();
-    }, 4000);
+    }, 30_000);
     return () => window.clearInterval(intervalId);
   }, [isAdmin]);
 
