@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { visitorClient as supabase } from "@/lib/visitorClient";
 import { useCountry } from "@/contexts/CountryContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
 
