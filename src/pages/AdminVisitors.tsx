@@ -397,23 +397,32 @@ const AdminVisitors = () => {
     prevSnapshot.current = next;
   }, [visitors]);
 
-  // Realtime: refresh on any visitor change
+  // Realtime: refresh on any visitor change (debounced + silent to avoid flicker)
   useEffect(() => {
     if (!isAdmin) return;
+    let timer: number | null = null;
+    const scheduleReload = () => {
+      if (timer !== null) return;
+      timer = window.setTimeout(() => {
+        timer = null;
+        void load(true);
+      }, 600);
+    };
     const channel = supabase
       .channel("admin_visitors_rt")
-      .on("postgres_changes", { event: "*", schema: "public", table: "visitors" }, () => {
-        void load();
-      })
+      .on("postgres_changes", { event: "*", schema: "public", table: "visitors" }, scheduleReload)
       .subscribe();
-    return () => { supabase.removeChannel(channel); };
+    return () => {
+      if (timer !== null) window.clearTimeout(timer);
+      supabase.removeChannel(channel);
+    };
   }, [isAdmin]);
 
-  // Polling fallback in case realtime misses an event (every 30s; realtime handles instant updates)
+  // Polling fallback in case realtime misses an event (silent — no spinner flash)
   useEffect(() => {
     if (!isAdmin) return;
     const intervalId = window.setInterval(() => {
-      void load();
+      void load(true);
     }, 30_000);
     return () => window.clearInterval(intervalId);
   }, [isAdmin]);
