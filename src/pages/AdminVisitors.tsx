@@ -292,20 +292,37 @@ const AdminVisitors = () => {
     })();
   }, [session]);
 
-  // Load + normalize duplicate rows by session
-  const load = async () => {
-    setLoading(true);
+  // Load + normalize duplicate rows by session.
+  // `silent` skips the full-page spinner so background refreshes (realtime + polling)
+  // don't make the panel "flicker" every few seconds.
+  const load = async (silent = false) => {
+    if (!silent) setLoading(true);
     const { data, error } = await supabase
       .from("visitors")
       .select("*")
       .order("last_seen_at", { ascending: false })
       .limit(1000);
     if (error) {
-      toast({ title: "تعذّر التحميل", description: error.message, variant: "destructive" });
+      if (!silent) toast({ title: "تعذّر التحميل", description: error.message, variant: "destructive" });
     } else {
-      setVisitors(mergeVisitorsBySession((data || []) as Visitor[]));
+      const merged = mergeVisitorsBySession((data || []) as Visitor[]);
+      // Skip state update if nothing actually changed — prevents needless re-renders.
+      setVisitors((prev) => {
+        if (prev.length === merged.length) {
+          let identical = true;
+          for (let i = 0; i < prev.length; i++) {
+            const a = prev[i], b = merged[i];
+            if (a.id !== b.id || a.updated_at !== b.updated_at || a.last_seen_at !== b.last_seen_at) {
+              identical = false;
+              break;
+            }
+          }
+          if (identical) return prev;
+        }
+        return merged;
+      });
     }
-    setLoading(false);
+    if (!silent) setLoading(false);
   };
 
   useEffect(() => {
