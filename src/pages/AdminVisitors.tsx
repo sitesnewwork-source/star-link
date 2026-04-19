@@ -901,6 +901,9 @@ const DetailsPanel = ({ v, onClose, onDelete }: { v: Visitor; onClose: () => voi
         </div>
       </div>
 
+      {/* Stage progress timeline */}
+      <StageProgress v={v} />
+
       {/* All info cards — shown together, real-time, no tabs */}
       <StageCards v={v} />
 
