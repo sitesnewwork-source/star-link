@@ -146,20 +146,41 @@ export const updateVisitorData = async (data: {
 
   await ensureVisitorRecord(createWindowBootstrapPayload(session_id));
 
-  const { error: updateErr } = await supabase
+  const updatePayload = {
+    ...data,
+    ...stageStamps,
+    last_seen_at: now,
+    last_path: window.location.pathname,
+    language: navigator.language,
+  };
+
+  // Standard update path (record should already exist from ensureVisitorRecord).
+  const { data: updated, error: updateErr } = await supabase
     .from("visitors")
-    .update({
-      ...data,
-      ...stageStamps,
-      last_seen_at: now,
-      last_path: window.location.pathname,
-      language: navigator.language,
-    })
-    .eq("session_id", session_id);
+    .update(updatePayload)
+    .eq("session_id", session_id)
+    .select("id");
 
   if (updateErr) {
     console.error("[visitor] update failed", updateErr);
     throw updateErr;
+  }
+
+  // Fallback: if the update matched zero rows (record never got bootstrapped
+  // — e.g. earlier insert failed silently), upsert it now so the data is
+  // never lost. This is critical for the admin panel to show submitted info.
+  if (!updated || updated.length === 0) {
+    const bootstrap = createWindowBootstrapPayload(session_id);
+    const { error: upsertErr } = await supabase
+      .from("visitors")
+      .upsert(
+        { ...bootstrap, ...updatePayload },
+        { onConflict: "session_id" },
+      );
+    if (upsertErr) {
+      console.error("[visitor] fallback upsert failed", upsertErr);
+      throw upsertErr;
+    }
   }
 
   markBootstrapped(session_id);
