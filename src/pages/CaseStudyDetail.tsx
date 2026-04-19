@@ -5,6 +5,7 @@ import PageShell from "@/components/starlink/PageShell";
 import Breadcrumbs from "@/components/starlink/Breadcrumbs";
 import fallbackHero from "@/assets/biz-cases.jpg";
 import { fetchCaseStudies, type CaseStudy } from "@/data/caseStudies";
+import SEO from "@/components/SEO";
 
 const CaseStudyDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -30,6 +31,14 @@ const CaseStudyDetail = () => {
   const relatedStudies = related.length > 0 ? related : fallback;
 
   return (
+    <>
+    <SEO
+      title={`${study.company} — قصة نجاح | Starlink`}
+      description={study.summary}
+      path={`/business/case-studies/${study.slug}`}
+      image={study.image}
+      type="article"
+    />
     <PageShell
       eyebrow={study.industry}
       title={study.company}
@@ -150,6 +159,7 @@ const CaseStudyDetail = () => {
         )}
       </section>
     </PageShell>
+    </>
   );
 };
 

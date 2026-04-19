@@ -6,6 +6,8 @@ import PageShell from "@/components/starlink/PageShell";
 import Breadcrumbs from "@/components/starlink/Breadcrumbs";
 import { toast } from "@/hooks/use-toast";
 import hero from "@/assets/resellers.jpg";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 const Resellers = () => {
   const { t } = useTranslation();
@@ -38,6 +40,8 @@ const Resellers = () => {
   };
 
   return (
+    <>
+    <SEO title={seoData.resellers.title} description={seoData.resellers.description} path="/resellers" />
     <PageShell
       eyebrow={t("resellers.eyebrow")}
       title={t("resellers.title")}
@@ -102,6 +106,7 @@ const Resellers = () => {
         )}
       </section>
     </PageShell>
+    </>
   );
 };
 

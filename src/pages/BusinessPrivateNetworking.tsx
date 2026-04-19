@@ -1,10 +1,14 @@
 import { useTranslation } from "react-i18next";
 import BusinessPage from "@/components/starlink/BusinessPage";
 import hero from "@/assets/biz-private.jpg";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 const BusinessPrivateNetworking = () => {
   const { t } = useTranslation();
   return (
+    <>
+    <SEO title={seoData.businessPrivateNetworking.title} description={seoData.businessPrivateNetworking.description} path="/business/private-networking" />
     <BusinessPage
       eyebrow={t("business.privateNetworking.eyebrow")}
       title={t("business.privateNetworking.title")}
@@ -20,6 +24,7 @@ const BusinessPrivateNetworking = () => {
         { title: t("business.privateNetworking.f6Title"), description: t("business.privateNetworking.f6Desc") },
       ]}
     />
+    </>
   );
 };
 

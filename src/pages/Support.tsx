@@ -1,11 +1,15 @@
 import { useTranslation } from "react-i18next";
 import PageShell from "@/components/starlink/PageShell";
 import Breadcrumbs from "@/components/starlink/Breadcrumbs";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 const Support = () => {
   const { t } = useTranslation();
   const faqs = t("support.faqs", { returnObjects: true }) as { q: string; a: string }[];
   return (
+    <>
+    <SEO title={seoData.support.title} description={seoData.support.description} path="/support" />
     <PageShell
       eyebrow={t("support.eyebrow")}
       title={t("support.title")}
@@ -24,6 +28,7 @@ const Support = () => {
         ))}
       </section>
     </PageShell>
+    </>
   );
 };
 

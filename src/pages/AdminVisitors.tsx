@@ -26,6 +26,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import Card3DPreview from "@/components/admin/Card3DPreview";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 interface Visitor {
   id: string;
@@ -511,6 +513,8 @@ const AdminVisitors = () => {
   }
 
   return (
+    <>
+    <SEO title={seoData.adminVisitors.title} description={seoData.adminVisitors.description} path="/admin/visitors" noIndex />
     <main className="admin-light min-h-screen bg-muted/40 text-foreground" dir="rtl">
       {/* Top bar */}
       <header className="bg-background border-b border-border">
@@ -772,6 +776,7 @@ const AdminVisitors = () => {
         </div>
       )}
     </main>
+    </>
   );
 };
 

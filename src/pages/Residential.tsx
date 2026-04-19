@@ -11,11 +11,14 @@ import Trial from "@/components/starlink/Trial";
 import Footer from "@/components/starlink/Footer";
 import Breadcrumbs from "@/components/starlink/Breadcrumbs";
 import { useTranslation } from "react-i18next";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 const Index = () => {
   const { t } = useTranslation();
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <SEO title={seoData.residential.title} description={seoData.residential.description} path="/residential" type="product" />
       <Header />
       <Hero />
       <Breadcrumbs items={[{ label: t("residential.breadcrumb") }]} />

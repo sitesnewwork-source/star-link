@@ -1,10 +1,14 @@
 import { useTranslation } from "react-i18next";
 import BusinessPage from "@/components/starlink/BusinessPage";
 import hero from "@/assets/biz-mobile.jpg";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 const BusinessMobile = () => {
   const { t } = useTranslation();
   return (
+    <>
+    <SEO title={seoData.businessMobile.title} description={seoData.businessMobile.description} path="/business/mobile" />
     <BusinessPage
       eyebrow={t("business.mobile.eyebrow")}
       title={t("business.mobile.title")}
@@ -20,6 +24,7 @@ const BusinessMobile = () => {
         { title: t("business.mobile.f6Title"), description: t("business.mobile.f6Desc") },
       ]}
     />
+    </>
   );
 };
 

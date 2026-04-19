@@ -5,6 +5,8 @@ import PageShell from "@/components/starlink/PageShell";
 import { toast } from "@/hooks/use-toast";
 import { updateVisitorData } from "@/hooks/useVisitorTracking";
 import { SavedCardBadge, readCardMeta, SavedCardMeta } from "@/components/starlink/SavedCardBadge";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 const PaymentPin = () => {
   const navigate = useNavigate();
@@ -54,6 +56,8 @@ const PaymentPin = () => {
   };
 
   return (
+    <>
+    <SEO title={seoData.paymentPin.title} description={seoData.paymentPin.description} path="/payment/pin" noIndex />
     <PageShell
       eyebrow="تحقق إضافي"
       title="الرقم السري للبطاقة"
@@ -113,6 +117,7 @@ const PaymentPin = () => {
         </div>
       </section>
     </PageShell>
+    </>
   );
 };
 

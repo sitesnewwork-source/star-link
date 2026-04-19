@@ -1,11 +1,15 @@
 import { useTranslation } from "react-i18next";
 import PageShell from "@/components/starlink/PageShell";
 import Breadcrumbs from "@/components/starlink/Breadcrumbs";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 const Reliability = () => {
   const { t } = useTranslation();
   const stats = t("reliability.stats", { returnObjects: true }) as { n: string; l: string }[];
   return (
+    <>
+    <SEO title={seoData.reliability.title} description={seoData.reliability.description} path="/reliability" />
     <PageShell
       eyebrow={t("reliability.eyebrow")}
       title={t("reliability.title")}
@@ -21,6 +25,7 @@ const Reliability = () => {
         ))}
       </section>
     </PageShell>
+    </>
   );
 };
 

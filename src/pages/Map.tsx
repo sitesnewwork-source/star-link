@@ -10,6 +10,8 @@ import heroImg from "@/assets/world-map.jpg";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useCountry } from "@/contexts/CountryContext";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 type View = "coverage" | "speeds";
 
@@ -147,6 +149,8 @@ const Map = () => {
   const focusCountryLabel = country === "all" ? t("map.countries.JO") : countryLabel(country);
 
   return (
+    <>
+    <SEO title={seoData.map.title} description={seoData.map.description} path="/map" />
     <PageShell
       eyebrow={t("map.eyebrow")}
       title={t("map.title")}
@@ -478,6 +482,7 @@ const Map = () => {
         </div>
       </section>
     </PageShell>
+    </>
   );
 };
 

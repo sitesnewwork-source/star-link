@@ -4,6 +4,8 @@ import { Check, Minus } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import PageShell from "@/components/starlink/PageShell";
 import Breadcrumbs from "@/components/starlink/Breadcrumbs";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import Price from "@/components/starlink/Price";
 
@@ -76,6 +78,8 @@ const ServicePlans = () => {
   };
 
   return (
+    <>
+    <SEO title={seoData.servicePlans.title} description={seoData.servicePlans.description} path="/service-plans" />
     <PageShell
       eyebrow={t("servicePlans.eyebrow")}
       title={t("servicePlans.title")}
@@ -152,6 +156,7 @@ const ServicePlans = () => {
         )}
       </section>
     </PageShell>
+    </>
   );
 };
 

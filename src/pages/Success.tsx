@@ -5,6 +5,8 @@ import PageShell from "@/components/starlink/PageShell";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useCountUp } from "@/hooks/useCountUp";
 import { SavedCardBadge, readCardMeta, clearCardMeta, SavedCardMeta } from "@/components/starlink/SavedCardBadge";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 interface Order {
   fullName: string;
@@ -54,6 +56,8 @@ const Success = () => {
     Math.round(n).toLocaleString("en-US");
 
   return (
+    <>
+    <SEO title={seoData.success.title} description={seoData.success.description} path="/success" noIndex />
     <PageShell eyebrow="تم الطلب بنجاح" title="شكراً لطلبك!" description="تم تأكيد طلبك وسنرسل لك تفاصيل الشحن قريباً عبر البريد الإلكتروني.">
       <section className="container mx-auto px-6 py-16 max-w-2xl space-y-6">
         {/* Celebratory savings card */}
@@ -169,6 +173,7 @@ const Success = () => {
         </div>
       </section>
     </PageShell>
+    </>
   );
 };
 

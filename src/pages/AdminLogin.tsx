@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import type { Session } from "@supabase/supabase-js";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 const schema = z.object({
   email: z.string().trim().email("بريد إلكتروني غير صالح").max(255),
@@ -67,6 +69,8 @@ const AdminLogin = () => {
   };
 
   return (
+    <>
+    <SEO title={seoData.adminLogin.title} description={seoData.adminLogin.description} path="/admin/login" noIndex />
     <main className="admin-light min-h-screen flex flex-col bg-background text-foreground">
       <header className="border-b border-border">
         <div className="container mx-auto px-6 h-14 flex items-center justify-between">
@@ -118,6 +122,7 @@ const AdminLogin = () => {
         </div>
       </section>
     </main>
+    </>
   );
 };
 

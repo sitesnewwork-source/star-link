@@ -6,6 +6,8 @@ import Breadcrumbs from "@/components/starlink/Breadcrumbs";
 import hero from "@/assets/biz-cases.jpg";
 import { fetchCaseStudies, type CaseStudy } from "@/data/caseStudies";
 import { toast } from "@/hooks/use-toast";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 const ALL = "الكل";
 
@@ -35,6 +37,8 @@ const CaseStudies = () => {
   const visible = filter === ALL ? items : items.filter((i) => i.industry === filter);
 
   return (
+    <>
+    <SEO title={seoData.caseStudies.title} description={seoData.caseStudies.description} path="/business/case-studies" />
     <PageShell
       eyebrow="قصص النجاح"
       title="قصص عملاء الأعمال"
@@ -106,6 +110,7 @@ const CaseStudies = () => {
         )}
       </section>
     </PageShell>
+    </>
   );
 };
 

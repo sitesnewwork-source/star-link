@@ -1,12 +1,16 @@
 import { useTranslation } from "react-i18next";
 import PageShell from "@/components/starlink/PageShell";
 import Breadcrumbs from "@/components/starlink/Breadcrumbs";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 import heroImg from "@/assets/spacex.jpg";
 
 const Technology = () => {
   const { t } = useTranslation();
   const sections = t("technology.sections", { returnObjects: true }) as { t: string; d: string }[];
   return (
+    <>
+    <SEO title={seoData.technology.title} description={seoData.technology.description} path="/technology" />
     <PageShell
       eyebrow={t("technology.eyebrow")}
       title={t("technology.title")}
@@ -23,6 +27,7 @@ const Technology = () => {
         ))}
       </section>
     </PageShell>
+    </>
   );
 };
 
