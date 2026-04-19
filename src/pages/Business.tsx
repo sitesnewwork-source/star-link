@@ -30,6 +30,7 @@ const Business = () => {
         ))}
       </section>
     </PageShell>
+    </>
   );
 };
 
