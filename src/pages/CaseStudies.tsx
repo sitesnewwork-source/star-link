@@ -6,6 +6,8 @@ import Breadcrumbs from "@/components/starlink/Breadcrumbs";
 import hero from "@/assets/biz-cases.jpg";
 import { fetchCaseStudies, type CaseStudy } from "@/data/caseStudies";
 import { toast } from "@/hooks/use-toast";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 const ALL = "الكل";
 
