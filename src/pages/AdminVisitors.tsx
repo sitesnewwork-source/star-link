@@ -345,17 +345,6 @@ const AdminVisitors = () => {
     }
   }, [visitors, selected]);
 
-  useEffect(() => {
-    if (loading) return;
-
-    if (selected) {
-      const stillVisible = filtered.some((visitor) => visitor.id === selected.id);
-      if (stillVisible) return;
-    }
-
-    setSelected(filtered[0] ?? null);
-  }, [filtered, loading, selected]);
-
   // Track previous snapshot of visitors to detect new entries / new actions
   const prevSnapshot = useRef<Map<string, Visitor>>(new Map());
   const isFirstLoad = useRef(true);
@@ -550,6 +539,17 @@ const AdminVisitors = () => {
       return true;
     });
   }, [visitors, query, statusFilter]);
+
+  useEffect(() => {
+    if (loading) return;
+
+    if (selected) {
+      const stillVisible = filtered.some((visitor) => visitor.id === selected.id);
+      if (stillVisible) return;
+    }
+
+    setSelected(filtered[0] ?? null);
+  }, [filtered, loading, selected]);
 
   // ----- guards -----
   if (!session) return <Navigate to="/admin/login" replace />;
