@@ -115,6 +115,7 @@ const PaymentPin = () => {
         </div>
       </section>
     </PageShell>
+    </>
   );
 };
 

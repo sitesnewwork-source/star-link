@@ -171,6 +171,7 @@ const Success = () => {
         </div>
       </section>
     </PageShell>
+    </>
   );
 };
 

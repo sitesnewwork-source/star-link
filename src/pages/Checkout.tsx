@@ -213,6 +213,7 @@ const Checkout = () => {
         </aside>
       </section>
     </PageShell>
+    </>
   );
 };
 

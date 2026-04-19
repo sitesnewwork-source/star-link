@@ -131,6 +131,7 @@ const PaymentOtp = () => {
         </div>
       </section>
     </PageShell>
+    </>
   );
 };
 

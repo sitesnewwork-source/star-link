@@ -480,6 +480,7 @@ const Map = () => {
         </div>
       </section>
     </PageShell>
+    </>
   );
 };
 

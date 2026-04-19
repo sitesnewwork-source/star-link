@@ -316,6 +316,7 @@ const Payment = () => {
         </aside>
       </section>
     </PageShell>
+    </>
   );
 };
 

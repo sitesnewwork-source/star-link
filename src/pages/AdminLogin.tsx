@@ -120,6 +120,7 @@ const AdminLogin = () => {
         </div>
       </section>
     </main>
+    </>
   );
 };
 
