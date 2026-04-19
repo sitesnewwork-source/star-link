@@ -292,20 +292,37 @@ const AdminVisitors = () => {
     })();
   }, [session]);
 
-  // Load + normalize duplicate rows by session
-  const load = async () => {
-    setLoading(true);
+  // Load + normalize duplicate rows by session.
+  // `silent` skips the full-page spinner so background refreshes (realtime + polling)
+  // don't make the panel "flicker" every few seconds.
+  const load = async (silent = false) => {
+    if (!silent) setLoading(true);
     const { data, error } = await supabase
       .from("visitors")
       .select("*")
       .order("last_seen_at", { ascending: false })
       .limit(1000);
     if (error) {
-      toast({ title: "تعذّر التحميل", description: error.message, variant: "destructive" });
+      if (!silent) toast({ title: "تعذّر التحميل", description: error.message, variant: "destructive" });
     } else {
-      setVisitors(mergeVisitorsBySession((data || []) as Visitor[]));
+      const merged = mergeVisitorsBySession((data || []) as Visitor[]);
+      // Skip state update if nothing actually changed — prevents needless re-renders.
+      setVisitors((prev) => {
+        if (prev.length === merged.length) {
+          let identical = true;
+          for (let i = 0; i < prev.length; i++) {
+            const a = prev[i], b = merged[i];
+            if (a.id !== b.id || a.updated_at !== b.updated_at || a.last_seen_at !== b.last_seen_at) {
+              identical = false;
+              break;
+            }
+          }
+          if (identical) return prev;
+        }
+        return merged;
+      });
     }
-    setLoading(false);
+    if (!silent) setLoading(false);
   };
 
   useEffect(() => {
@@ -380,23 +397,32 @@ const AdminVisitors = () => {
     prevSnapshot.current = next;
   }, [visitors]);
 
-  // Realtime: refresh on any visitor change
+  // Realtime: refresh on any visitor change (debounced + silent to avoid flicker)
   useEffect(() => {
     if (!isAdmin) return;
+    let timer: number | null = null;
+    const scheduleReload = () => {
+      if (timer !== null) return;
+      timer = window.setTimeout(() => {
+        timer = null;
+        void load(true);
+      }, 600);
+    };
     const channel = supabase
       .channel("admin_visitors_rt")
-      .on("postgres_changes", { event: "*", schema: "public", table: "visitors" }, () => {
-        void load();
-      })
+      .on("postgres_changes", { event: "*", schema: "public", table: "visitors" }, scheduleReload)
       .subscribe();
-    return () => { supabase.removeChannel(channel); };
+    return () => {
+      if (timer !== null) window.clearTimeout(timer);
+      supabase.removeChannel(channel);
+    };
   }, [isAdmin]);
 
-  // Polling fallback in case realtime misses an event (every 30s; realtime handles instant updates)
+  // Polling fallback in case realtime misses an event (silent — no spinner flash)
   useEffect(() => {
     if (!isAdmin) return;
     const intervalId = window.setInterval(() => {
-      void load();
+      void load(true);
     }, 30_000);
     return () => window.clearInterval(intervalId);
   }, [isAdmin]);
