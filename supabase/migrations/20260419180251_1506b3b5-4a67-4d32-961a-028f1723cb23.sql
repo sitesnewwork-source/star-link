@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX IF NOT EXISTS visitors_session_id_key ON public.visitors (session_id);

