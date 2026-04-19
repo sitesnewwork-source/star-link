@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Starlink-inspired luxury dark design system. All colors HSL. */
+
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 0 0% 14%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 14%;
+    --ring: 0 0% 80%;
+
+    --radius: 0.25rem;
+
+    /* Brand tokens */
+    --brand-glow: 210 100% 70%;
+    --hero-overlay: linear-gradient(180deg, hsl(0 0% 0% / 0.1) 0%, hsl(0 0% 0% / 0.4) 60%, hsl(0 0% 0% / 0.85) 100%);
+    --section-gradient: linear-gradient(180deg, hsl(0 0% 4%) 0%, hsl(0 0% 0%) 100%);
+    --shadow-elegant: 0 20px 60px -20px hsl(0 0% 0% / 0.6);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Service & status semantic tokens */
+    --service-residential: 142 71% 45%;
+    --service-roam: 199 89% 60%;
+    --service-business: 258 90% 76%;
+    --status-soon: 48 96% 53%;
+    --service-neutral: 0 0% 64%;
+
+    --sidebar-background: 0 0% 4%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 0 0% 80%;
+  }
+
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 0 0% 14%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 18%;
+    --input: 0 0% 14%;
+    --ring: 0 0% 80%;
+  }
+
+  /* Admin panel — warm hospitality scope (cream + forest green) */
+  .admin-light {
+    --background: 40 30% 96%;            /* cream-light #F9F7F2 */
+    --foreground: 60 1% 23%;             /* stone #3C3C3B */
+
+    --card: 0 0% 100%;                   /* marble */
+    --card-foreground: 60 1% 23%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 60 1% 23%;
+
+    --primary: 138 28% 15%;              /* forest #1B3022 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 40 26% 92%;             /* cream-base #F2EEE5 */
+    --secondary-foreground: 138 28% 15%;
+
+    --muted: 40 26% 92%;
+    --muted-foreground: 60 4% 38%;
+
+    --accent: 113 11% 59%;               /* sage #8DA08E */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 40 18% 86%;
+    --input: 40 22% 90%;
+    --ring: 138 28% 15%;
+
+    color: hsl(var(--foreground));
+    background-color: hsl(var(--background));
+  }
+
+  .admin-light h1,
+  .admin-light h2,
+  .admin-light h3,
+  .admin-light h4 {
+    font-family: 'Tajawal', system-ui, sans-serif;
+    font-weight: 900;
+    letter-spacing: -0.015em;
+  }
+
+  .admin-light h1 { font-size: 1.625rem; line-height: 1.15; }
+  .admin-light h2 { font-size: 1.375rem; line-height: 1.2; }
+  .admin-light h3 { font-size: 1.15rem;  line-height: 1.25; }
+
+  .admin-light h1,
+  .admin-light h2,
+  .admin-light h3 {
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+
+  .admin-light h1::after,
+  .admin-light h2::after,
+  .admin-light h3::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    inset-inline-start: 0;
+    width: 2.25rem;
+    height: 3px;
+    border-radius: 2px;
+    background: hsl(138 28% 15%); /* forest */
+  }
+
+  .admin-light h3::after { width: 1.75rem; height: 2px; }
+
+  .admin-light .font-semibold {
+    font-weight: 700;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html[dir="rtl"] {
+    direction: rtl;
+  }
+
+  html[dir="ltr"] {
+    direction: ltr;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Tajawal', system-ui, -apple-system, sans-serif;
+    font-feature-settings: "ss01", "ss02";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Push the page down when the global promo banner is visible */
+  html.has-promo-banner body {
+    padding-top: var(--promo-banner-h, 0px);
+  }
+  /* Keep fixed nav/header below the promo banner */
+  html.has-promo-banner header[class*="fixed"],
+  html.has-promo-banner .fixed-header {
+    top: var(--promo-banner-h, 0px) !important;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-light tracking-tight;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  .hero-overlay {
+    background: var(--hero-overlay);
+  }
+  .section-gradient {
+    background: var(--section-gradient);
+  }
+  .text-shadow-soft {
+    text-shadow: 0 2px 20px hsl(0 0% 0% / 0.5);
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .fade-edges-x {
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+  }
+  .country-selected {
+    filter: drop-shadow(0 0 6px hsl(var(--primary) / 0.65)) drop-shadow(0 0 14px hsl(var(--primary) / 0.35));
+    animation: country-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes country-pulse {
+    0%, 100% { filter: drop-shadow(0 0 6px hsl(var(--primary) / 0.55)) drop-shadow(0 0 12px hsl(var(--primary) / 0.25)); }
+    50%      { filter: drop-shadow(0 0 10px hsl(var(--primary) / 0.85)) drop-shadow(0 0 20px hsl(var(--primary) / 0.45)); }
+  }
+  .flash-update {
+    animation: flash-update 1.6s ease-out;
+    border-radius: 6px;
+  }
+  @keyframes flash-update {
+    0%   { background-color: hsl(48 96% 53% / 0.45); box-shadow: 0 0 0 4px hsl(48 96% 53% / 0.35); }
+    60%  { background-color: hsl(48 96% 53% / 0.18); box-shadow: 0 0 0 2px hsl(48 96% 53% / 0.15); }
+    100% { background-color: transparent; box-shadow: 0 0 0 0 transparent; }
+  }
+}

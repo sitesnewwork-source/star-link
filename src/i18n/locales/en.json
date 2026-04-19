@@ -1,0 +1,708 @@
+{
+  "brand": "STARLINK",
+  "nav": {
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "personal": "Personal",
+    "homes": "Residential",
+    "roam": "Roam",
+    "business": "Business",
+    "businessOverview": "Overview",
+    "resellers": "Authorized Resellers",
+    "support": "Help Center",
+    "map": "Service Availability Map",
+    "specifications": "Specifications",
+    "servicePlans": "Service Plans",
+    "videos": "Video Guides",
+    "technology": "Technology",
+    "updates": "Updates",
+    "stories": "Customer Stories",
+    "country": "Country",
+    "language": "Language",
+    "currency": "Currency"
+  },
+  "businessSubNav": {
+    "fixed": "Fixed Site",
+    "maritime": "Maritime",
+    "aviation": "Aviation",
+    "mobile": "Mobile",
+    "communityGateway": "Community Gateway",
+    "privateNetworking": "Private Networking",
+    "caseStudies": "Case Studies"
+  },
+  "countries": {
+    "JO": "Jordan",
+    "SA": "Saudi Arabia",
+    "AE": "UAE",
+    "KW": "Kuwait",
+    "QA": "Qatar",
+    "BH": "Bahrain",
+    "OM": "Oman",
+    "SY": "Syria",
+    "IQ": "Iraq",
+    "LB": "Lebanon"
+  },
+  "languages": {
+    "ar": "العربية",
+    "en": "English"
+  },
+  "common": {
+    "learnMore": "Learn More",
+    "getStarted": "Get Started",
+    "home": "Home",
+    "breadcrumbAria": "Breadcrumb"
+  },
+  "address": {
+    "label": "Service address",
+    "placeholder": "Start typing your address, then pick from the list",
+    "useLocationAria": "Use my location",
+    "submit": "Get Started",
+    "viewMap": "View availability and speeds map",
+    "errInvalidTitle": "Enter a valid address",
+    "errInvalidDesc": "Type a detailed address, then press Get Started",
+    "geoUnsupportedTitle": "Location not supported",
+    "geoUnsupportedDesc": "Your browser does not support geolocation",
+    "currentLocation": "Current location ({{lat}}, {{lng}})",
+    "locatedTitle": "Your location was detected",
+    "geoErrorTitle": "Could not detect location",
+    "geoErrorDesc": "Make sure to allow location access"
+  },
+  "home": {
+    "heroAlt": "Starry sky and a Starlink dish",
+    "heroTitle1": "High-speed internet",
+    "heroTitle2": "from space",
+    "heroTitle3": "you can rely on",
+    "heroSubtitle1": "Connect at home or on the move",
+    "heroSubtitle2": "Check the speeds available in your country",
+    "card": {
+      "homesName": "Residential",
+      "homesDesc": "Get internet at home — start below to see plans and pricing",
+      "roamName": "Roam",
+      "roamDesc": "Stay connected while traveling across 150+ markets",
+      "roamPricePrefix": "Starting from ",
+      "roamPriceSuffix": "/month"
+    },
+    "globalTitle": "Fast connectivity wherever and whenever you need it",
+    "globalDesc": "Available in 150+ countries, territories and other markets worldwide",
+    "globalCta": "Check service availability and plans in your area ›",
+    "reliableTitle": "Consistently reliable performance",
+    "reliableDesc": "Starlink delivers high-speed, low-latency internet with average uptime above 99.9% and reliable connectivity around the world. Starlink kits are engineered to withstand all weather — they can melt snow and endure ice, heavy rain and strong winds. ",
+    "reliableLink": "Learn more here.",
+    "allNeedsTitle": "Internet built for every need",
+    "allNeedsDesc": "Starlink delivers speeds of 400+ Mbps in most locations worldwide, giving you the freedom to stream 4K on multiple devices, work effectively from home, game online, browse social media and more. ",
+    "allNeedsLink": "Check speeds in your area here.",
+    "kitAlt": "Starlink kit",
+    "playVideo": "Play video",
+    "connectTitle": "Get online in minutes",
+    "connectIntro": "Set up Starlink in just two steps:",
+    "connectStep1": "Plug in the dish",
+    "connectStep2": "Point the dish at the sky",
+    "connectNote": "Starlink hardware requires a clear, unobstructed view of the sky. Then download the Starlink app to find the best installation spot.",
+    "downloadAndroid": "DOWNLOAD FOR ANDROID",
+    "downloadIos": "DOWNLOAD FOR IOS",
+    "plansTitle": "Flexible service plans",
+    "plansDesc": "Starlink offers flexible service plans everywhere. Check availability by entering your address ",
+    "plansLink": "here.",
+    "spacexTitle": "ENGINEERED BY SPACEX",
+    "spacexDesc": "As the world's leading launch provider — and the only one with reusable orbital-class rockets — SpaceX brings deep expertise in both spacecraft and on-orbit operations.",
+    "spacexCta": "Learn more ›"
+  },
+  "residential": {
+    "breadcrumb": "Residential",
+    "heroAlt": "Starlink dish mounted on a rooftop at sunset",
+    "heroTitle1": "High-speed internet",
+    "heroTitle2": "you can rely on",
+    "heroTitle3": "for your home",
+    "heroSub1": "Reliable high-speed internet, wherever you are.",
+    "heroSub2Prefix": "Service starts from ",
+    "heroSub2Suffix": "/month.",
+    "heroSub3": "No upfront hardware cost on select plans.",
+    "plansHeading": "Stream movies, video call, game, and more",
+    "currency": "$",
+    "perMonth": "/month",
+    "plansCta": "Get started below to view plans, speeds, and promotions available in your area",
+    "viewAllPlans": "View all plans",
+    "getStarted": "Get Started",
+    "features": {
+      "plug": "Plug-and-play setup",
+      "uptime": "99.9%+ uptime",
+      "weather": "Weather resistant",
+      "unlimited": "Unlimited data",
+      "trial": "30-day trial"
+    },
+    "plan": {
+      "liteName": "RESIDENTIAL LITE",
+      "liteDesc": "Reliable high-speed internet for everyday home use",
+      "homesName": "RESIDENTIAL",
+      "homesDesc": "Best-performing home internet at the highest available speeds",
+      "unlimited": "Unlimited data"
+    },
+    "email": {
+      "title": "Receive STARLINK updates by email",
+      "subtitle": "Subscribe below",
+      "compactTitle": "Want to stay up to date with the latest from Starlink?",
+      "placeholder": "Email address",
+      "subscribe": "Subscribe",
+      "privacy": "Privacy Policy"
+    },
+    "useCases": {
+      "streamTitle": "Stream video seamlessly",
+      "streamBody": "Enjoy high speeds for streaming on your favorite platforms, plus movies and live events in HD and 4K.",
+      "workTitle": "Work from home",
+      "workBody": "Work from home with Starlink high-speed internet — clear video calls, sharp imagery, and conversations without interruption.",
+      "gameTitle": "Low-latency online gaming",
+      "gameBody": "Game online from home or on the move with Starlink's low-latency network.",
+      "videoTitle": "Smooth video calls",
+      "videoBody": "Stay connected with friends, family, and your community without high latency or connection delays.",
+      "prev": "Previous slide",
+      "next": "Next slide",
+      "goto": "Go to slide"
+    },
+    "mini": {
+      "alt": "Starlink Mini in a backpack",
+      "desc": "Starlink Mini is a compact, portable kit that fits easily in a backpack — designed to deliver high-speed, low-latency internet on the move. It features a built-in Wi-Fi router, DC power input, lower power consumption, and peak download speeds of 200+ Mbps.",
+      "specsCta": "View specifications ›"
+    },
+    "feature": {
+      "anywhereTitle": "High-speed internet anywhere",
+      "anywhereDesc": "Do things you never thought possible over satellite internet, powered by the world's largest constellation of advanced satellites operating in low Earth orbit.",
+      "reliableTitle": "Consistently reliable performance",
+      "reliableDesc": "Starlink delivers high-speed, low-latency internet with average uptime above 99.9% and reliable connectivity around the world. Starlink kits are engineered to withstand all weather — they can melt snow and endure ice, heavy rain and strong winds. ",
+      "reliableLink": "Learn more here.",
+      "allNeedsTitle": "Internet built for every need",
+      "allNeedsDesc": "Starlink delivers speeds of 400+ Mbps in most locations worldwide, giving you the freedom to stream 4K on multiple devices, work effectively from home, game online, browse social media and more. ",
+      "allNeedsLink": "Check speeds in your area here.",
+      "kitAlt": "Starlink kit",
+      "playVideo": "Play video",
+      "selfInstallTitle": "Designed for self-installation",
+      "selfInstallIntro": "Set up Starlink in just two steps:",
+      "step1": "Plug in the dish",
+      "step2": "Point the dish at the sky",
+      "selfInstallNote": "Starlink hardware requires a clear, unobstructed view of the sky. Then download the Starlink app to find the best installation spot.",
+      "android": "DOWNLOAD FOR ANDROID",
+      "ios": "DOWNLOAD FOR IOS",
+      "unlimitedTitle": "Unlimited data available",
+      "unlimitedDesc": "Starlink residential plans include unlimited, high-speed data options for your home."
+    },
+    "box": {
+      "title": "What's in the standard box",
+      "desc": "Every Starlink kit comes with everything you need to get online in minutes.",
+      "specs": "View specifications",
+      "prev": "Previous",
+      "next": "Next",
+      "items": {
+        "starlink": "STARLINK",
+        "mount": "Kickstand mount",
+        "router": "Router 3",
+        "cable": "STARLINK cable",
+        "power": "Power cable",
+        "adapter": "Power adapter"
+      }
+    },
+    "testimonials": {
+      "heading": "Customer reviews",
+      "t1Title": "Low latency",
+      "t1Quote": "It's a different world... before Starlink, we had to ration our data and couldn't watch or stream video. Now we can download files, run Pandora, and Zoom video call without any service delay.",
+      "t1Author": "William D. — Colorado, USA",
+      "t2Title": "An internet revolution",
+      "t2Quote": "An internet revolution. The service is properly available, unlike our previous ISP that was painfully slow. You just install the hardware and point the dish at the sky. It only took 5 minutes to get the fastest internet in the area.",
+      "t2Author": "Aaron W. — Southern England",
+      "t3Title": "Incredibly fast service",
+      "t3Quote": "Millions of people in the world are offline, and we're happy to say we're no longer one of them. We were online with high-speed internet within minutes — Starlink ended a six-year wait.",
+      "t3Author": "Neil V. — New South Wales, Australia"
+    },
+    "trial": {
+      "title": "30-day trial",
+      "desc": "Try Starlink for 30 days. If you're not satisfied, you can return it for a full refund."
+    }
+  },
+  "roam": {
+    "breadcrumb": "Roam",
+    "heroAlt": "Starlink Roam under a starry sky",
+    "eyebrow": "STARLINK ROAM",
+    "title1": "High-speed internet",
+    "title2": "wherever you go",
+    "subtitle": "Stay connected while camping, traveling, or in remote locations. Fast setup and reliable satellite coverage across Jordan and around the world."
+  },
+  "business": {
+    "backHome": "Back to home",
+    "breadcrumb": "Business",
+    "contactSales": "Contact Sales",
+    "contactDesc": "Get a custom quote for your needs in the {{vertical}} sector.",
+    "form": {
+      "name": "Full name",
+      "company": "Company",
+      "email": "Email address",
+      "phone": "Phone number",
+      "message": "Request details (optional)",
+      "submit": "Send request",
+      "validateTitle": "Check your details",
+      "errors": {
+        "name": "Name is required",
+        "company": "Company name is required",
+        "email": "Invalid email address",
+        "phone": "Invalid phone number"
+      },
+      "successToastTitle": "Request received",
+      "successToastDesc": "The {{vertical}} team will contact you within 24 hours.",
+      "thanks": "Thank you for reaching out",
+      "thanksDesc": "Your request has been received and we'll respond shortly.",
+      "another": "Send another request"
+    },
+    "overview": {
+      "eyebrow": "Business",
+      "title": "Starlink for Business — Reliable connectivity for your organization",
+      "description": "High-speed, low-latency satellite internet solutions designed for the needs of companies, offices, and field projects across Jordan.",
+      "cta": "Contact Sales",
+      "f1Title": "Enterprise-grade performance",
+      "f1Desc": "Connectivity that supports mission-critical operations 24/7.",
+      "f2Title": "Rapid deployment",
+      "f2Desc": "Set up in minutes at virtually any location.",
+      "f3Title": "Dedicated support",
+      "f3Desc": "A dedicated enterprise support team for your account."
+    },
+    "fixed": {
+      "eyebrow": "Fixed Site",
+      "title": "Starlink for Fixed Sites",
+      "description": "Reliable high-speed internet for offices, factories, and remote sites — with rapid deployment and enterprise-grade performance.",
+      "vertical": "Fixed Sites",
+      "f1Title": "Professional installation",
+      "f1Desc": "Certified installers set up the equipment on-site to the highest standards.",
+      "f2Title": "Network priority",
+      "f2Desc": "High-priority data quota ensures consistent performance for critical operations.",
+      "f3Title": "SLA agreement",
+      "f3Desc": "Custom service-level agreements with uptime and performance guarantees.",
+      "f4Title": "Centralized management",
+      "f4Desc": "Unified management portal to monitor all your devices across multiple locations.",
+      "f5Title": "24/7 support",
+      "f5Desc": "Dedicated enterprise support team available around the clock.",
+      "f6Title": "Weather-resistant hardware",
+      "f6Desc": "Operates in the harshest conditions from −30°C to +50°C."
+    },
+    "maritime": {
+      "eyebrow": "Maritime",
+      "title": "Starlink for Maritime",
+      "description": "High-speed internet at sea — for commercial vessels, yachts, and oil platforms, with global coverage in international waters.",
+      "vertical": "Maritime",
+      "f1Title": "Global coverage",
+      "f1Desc": "Continuous connectivity on the high seas and along major shipping lanes.",
+      "f2Title": "Stable performance",
+      "f2Desc": "Motion-tracking antenna keeps up with vessel pitch and roll.",
+      "f3Title": "Crew welfare",
+      "f3Desc": "Plenty of bandwidth for entertainment and staying in touch with families during long voyages.",
+      "f4Title": "Vessel operations",
+      "f4Desc": "Real-time navigation, shipping, and operational communications data.",
+      "f5Title": "Certified marine install",
+      "f5Desc": "Salt- and vibration-resistant hardware certified for marine use.",
+      "f6Title": "Flexible plans",
+      "f6Desc": "Pause service in port and only activate it while underway."
+    },
+    "aviation": {
+      "eyebrow": "Aviation",
+      "title": "Starlink for Aviation",
+      "description": "Gigabit-class internet in the cabin — a seamless experience for passengers and flight crew with low latency at 35,000 feet.",
+      "vertical": "Aviation",
+      "f1Title": "Blazing speed",
+      "f1Desc": "Up to 220 Mbps per passenger — enough to stream video and join meetings.",
+      "f2Title": "ELA antenna",
+      "f2Desc": "Lightweight, low-profile flat antenna that minimizes drag.",
+      "f3Title": "Passenger experience",
+      "f3Desc": "Instant sign-in with no passwords and no ads.",
+      "f4Title": "Crew connectivity",
+      "f4Desc": "Real-time weather, navigation, and maintenance data.",
+      "f5Title": "Global coverage",
+      "f5Desc": "Continuous connectivity across continents, oceans, and polar regions.",
+      "f6Title": "Easy installation",
+      "f6Desc": "Installs much faster than traditional systems."
+    },
+    "mobile": {
+      "eyebrow": "Mobile",
+      "title": "Starlink Mobile for Business",
+      "description": "Reliable connectivity for fleets, field operations, and emergency response — with hardware that works in motion and coverage in 150+ markets.",
+      "vertical": "Mobile Operations",
+      "f1Title": "Works in motion",
+      "f1Desc": "Hardware certified to operate while vehicles move on roads and off-road.",
+      "f2Title": "Fleet management",
+      "f2Desc": "Track and monitor all your vehicles from a unified management portal.",
+      "f3Title": "Emergency response",
+      "f3Desc": "Rapid deployment to disaster sites to restore connectivity.",
+      "f4Title": "Live streaming",
+      "f4Desc": "Stream video from field sites with low latency.",
+      "f5Title": "Global coverage",
+      "f5Desc": "Continuous cross-border connectivity in 150+ markets.",
+      "f6Title": "Flexible plans",
+      "f6Desc": "Monthly or annual subscriptions tailored to your fleet's needs."
+    },
+    "communityGateway": {
+      "eyebrow": "Community Gateway",
+      "title": "Community Gateway — Connectivity for remote areas",
+      "description": "A high-capacity solution that connects villages, rural communities, and isolated regions to fast Starlink internet via a single local gateway serving thousands of users.",
+      "vertical": "Community Gateway",
+      "f1Title": "High capacity",
+      "f1Desc": "Up to 10 Gbps per gateway to serve an entire community.",
+      "f2Title": "Rapid deployment",
+      "f2Desc": "Up and running in days instead of years of traditional infrastructure.",
+      "f3Title": "Local management",
+      "f3Desc": "A control panel to manage users, plans, and subscription billing.",
+      "f4Title": "Full resilience",
+      "f4Desc": "Reliable backup connectivity for hospitals, schools, and essential services.",
+      "f5Title": "Low cost",
+      "f5Desc": "An economic model that lowers the cost per gigabyte for end users.",
+      "f6Title": "Enterprise support",
+      "f6Desc": "A dedicated engineering team for installation, operations, and routine maintenance."
+    },
+    "privateNetworking": {
+      "eyebrow": "Private Networking",
+      "title": "Private Networking — Secure, isolated connectivity",
+      "description": "Build a fully private network over Starlink with static IP addresses, dedicated VLANs, and complete isolation from the public internet to protect your sensitive enterprise data.",
+      "vertical": "Private Networking",
+      "f1Title": "Full isolation",
+      "f1Desc": "Your traffic never traverses the public internet.",
+      "f2Title": "Static IP",
+      "f2Desc": "Static IPv4 and IPv6 addresses per site to integrate with your systems.",
+      "f3Title": "Dedicated VLANs",
+      "f3Desc": "Easily segment your network by departments or branches.",
+      "f4Title": "End-to-end encryption",
+      "f4Desc": "Advanced protection for all data transmitted over the network.",
+      "f5Title": "Cloud integration",
+      "f5Desc": "Direct connectivity with AWS, Azure, and Google Cloud.",
+      "f6Title": "SLA agreement",
+      "f6Desc": "99.9% service-level guarantees with contractual remedies."
+    }
+  },
+  "support": {
+    "eyebrow": "Help Center",
+    "title": "How can we help?",
+    "description": "Answers to the most common questions, with a support team available 24/7.",
+    "breadcrumb": "Help Center",
+    "faqs": [
+      {
+        "q": "How do I install Starlink?",
+        "a": "In two simple steps: connect the dish and point it at the sky."
+      },
+      {
+        "q": "What are the site requirements?",
+        "a": "The device needs a clear, unobstructed view of the sky."
+      },
+      {
+        "q": "Can I pause my service?",
+        "a": "Yes, you can pause or resume the service from your account at any time."
+      },
+      {
+        "q": "Is there a trial period?",
+        "a": "Yes, a 30-day trial with a full refund if you are not satisfied."
+      }
+    ]
+  },
+  "footer": {
+    "twitterAria": "Starlink on Twitter",
+    "links": {
+      "jobs": "Careers",
+      "operators": "Satellite Operators",
+      "resellers": "Authorized Resellers",
+      "privacy": "Privacy & Legal",
+      "preferences": "Privacy Preferences"
+    },
+    "copyright": "Starlink © 2026",
+    "tagline": "Starlink is a division of SpaceX. Visit us at spacex.com"
+  },
+  "map": {
+    "eyebrow": "Coverage Map",
+    "title": "Service availability and speed map",
+    "description": "Check Starlink service availability and expected speeds in your area.",
+    "breadcrumb": "Service Map",
+    "viewCoverage": "Coverage",
+    "viewSpeeds": "Speeds",
+    "searchPlaceholder": "Search for a city...",
+    "searchBtn": "Search",
+    "country": "Country:",
+    "all": "All",
+    "countries": {
+      "JO": "Jordan",
+      "SA": "Saudi Arabia",
+      "AE": "UAE",
+      "QA": "Qatar",
+      "BH": "Bahrain",
+      "KW": "Kuwait",
+      "OM": "Oman",
+      "SY": "Syria",
+      "IQ": "Iraq",
+      "LB": "Lebanon"
+    },
+    "focusOn": "Focus on {{country}}",
+    "focusOnRefit": "Refit focus on {{country}}",
+    "clearSelection": "Clear selection",
+    "resetAll": "Reset",
+    "resetTooltip": "Clear all filters and refocus on Jordan",
+    "showGovs": "Show governorates",
+    "hideGovs": "Hide governorates",
+    "govsCoverage": "Governorate coverage:",
+    "covLow": "Low",
+    "covMid": "Medium",
+    "covHigh": "High",
+    "soon": "Coming soon",
+    "totalCities": "Total cities",
+    "coverage": "Coverage",
+    "available": "Available",
+    "comingSoon": "Coming soon",
+    "avgSpeed": "Avg speed",
+    "forAvailable": "for available cities ({{count}})",
+    "tableArea": "Area",
+    "tableStatus": "Status",
+    "tableSpeed": "Expected speed",
+    "noCities": "No cities for this service",
+    "orderNow": "Order now ›",
+    "highSpeed": "High speed",
+    "statusAvailable": "Available",
+    "statusSoon": "Coming soon",
+    "loadFailed": "Could not load cities",
+    "updatedTitle": "Coverage data updated",
+    "updatedDesc": "Live update received from admin",
+    "enterCityTitle": "Enter an area name",
+    "foundDesc": "Expected speed: {{speed}}",
+    "notFoundTitle": "Area not found in the list",
+    "notFoundDesc": "Try a major city or change the service",
+    "selectedCountryTitle": "{{country}} selected",
+    "selectedCountryDesc": "Filter updated automatically",
+    "resetTitle": "Reset done",
+    "resetDesc": "All filters cleared and focus reset to Jordan"
+  },
+  "servicePlans": {
+    "eyebrow": "Service Plans",
+    "title": "Flexible service plans for every need",
+    "description": "Pick a category and use type to view plans and pricing.",
+    "breadcrumb": "Service Plans",
+    "audPersonal": "Personal",
+    "audBusiness": "Business",
+    "mobFixed": "Fixed",
+    "mobMobile": "On the go",
+    "compareTitle": "Quick comparison table",
+    "feature": "Feature",
+    "yes": "Yes",
+    "no": "No",
+    "ctaStart": "Get Started",
+    "ctaContact": "Contact sales",
+    "features": {
+      "plug": "Plug-and-play setup",
+      "uptime": "Uptime ≥ 99.9%",
+      "unlimited": "Unlimited data",
+      "localOnly": "Local use only",
+      "priority": "Network priority",
+      "vehicles": "Available for vehicles"
+    },
+    "priorityStandard": "Standard",
+    "priorityHigh": "High",
+    "plans": {
+      "residential": {
+        "name": "Residential",
+        "tagline": "Best plan for households"
+      },
+      "roamLocal": {
+        "name": "Roam — 50GB",
+        "tagline": "For travelers and on-the-go"
+      },
+      "roamUnlimited": {
+        "name": "Roam — Unlimited",
+        "tagline": "For heavy on-the-go use"
+      },
+      "roamGlobal": {
+        "name": "Roam — Global",
+        "tagline": "Coverage in 150+ markets"
+      },
+      "bizFixed": {
+        "name": "Business — Fixed Site",
+        "price": "Contact for pricing",
+        "tagline": "For offices and facilities"
+      },
+      "bizMobile": {
+        "name": "Business — Mobile",
+        "price": "Contact for pricing",
+        "tagline": "For fleets and field"
+      }
+    }
+  },
+  "specifications": {
+    "eyebrow": "Specifications",
+    "title": "Technical specifications",
+    "description": "Full details on Starlink hardware performance and specifications.",
+    "breadcrumb": "Specifications",
+    "rows": [
+      {
+        "k": "Download speed",
+        "v": "25 - 220 Mbps"
+      },
+      {
+        "k": "Upload speed",
+        "v": "5 - 20 Mbps"
+      },
+      {
+        "k": "Latency",
+        "v": "25 - 60 ms"
+      },
+      {
+        "k": "Operating temperature range",
+        "v": "−30°C to +50°C"
+      },
+      {
+        "k": "Weather resistance",
+        "v": "IP67"
+      },
+      {
+        "k": "Power consumption",
+        "v": "50 - 75 W (avg)"
+      }
+    ]
+  },
+  "technology": {
+    "eyebrow": "Technology",
+    "title": "Engineered by SpaceX",
+    "description": "Starlink is the largest constellation of satellites in low Earth orbit, delivering high-speed, low-latency internet around the world.",
+    "breadcrumb": "Technology",
+    "sections": [
+      {
+        "t": "Low Earth Orbit",
+        "d": "Starlink satellites orbit at about 550 km, dramatically reducing latency compared to traditional satellites."
+      },
+      {
+        "t": "Reusable rockets",
+        "d": "SpaceX is the only company launching reusable orbital rockets, enabling rapid deployment."
+      },
+      {
+        "t": "Inter-satellite laser links",
+        "d": "Data is relayed at the speed of light between satellites in space, reducing reliance on ground stations."
+      }
+    ]
+  },
+  "stories": {
+    "eyebrow": "Customer Stories",
+    "title": "Real stories from our customers",
+    "description": "Discover how people use Starlink in their daily lives and businesses.",
+    "breadcrumb": "Stories",
+    "items": [
+      {
+        "name": "Ahmad, Petra",
+        "quote": "Finally fast, reliable internet in our mountainous area."
+      },
+      {
+        "name": "Sara, Amman",
+        "quote": "I work from home with zero downtime since installing Starlink."
+      },
+      {
+        "name": "Khalid, Wadi Rum",
+        "quote": "It changed camping — full connectivity in the heart of the desert."
+      }
+    ]
+  },
+  "updates": {
+    "eyebrow": "Updates",
+    "title": "Latest updates and news",
+    "description": "Stay informed about the latest releases, improvements, and new features.",
+    "breadcrumb": "Updates",
+    "items": [
+      {
+        "date": "2026-04-10",
+        "title": "Coverage expansion in Jordan",
+        "body": "Starlink service is now available in more rural regions across the kingdom."
+      },
+      {
+        "date": "2026-03-22",
+        "title": "Firmware update v2.5",
+        "body": "Performance and latency improvements for all Starlink devices."
+      },
+      {
+        "date": "2026-02-15",
+        "title": "Global Roam plan launch",
+        "body": "Coverage in over 150 markets worldwide is now available."
+      }
+    ]
+  },
+  "videos": {
+    "eyebrow": "Video Guides",
+    "title": "Video guides to help you every step of the way",
+    "description": "Learn how to set up and use Starlink through instructional videos.",
+    "breadcrumb": "Videos",
+    "items": [
+      "Install Starlink in 5 minutes",
+      "How to aim the dish at the sky",
+      "Using the Starlink app",
+      "Starlink in roam mode",
+      "Troubleshooting and fixes",
+      "Roof-mounting Starlink"
+    ]
+  },
+  "resellers": {
+    "eyebrow": "Partner Program",
+    "title": "Become an authorized Starlink reseller",
+    "description": "Join the network of authorized resellers and offer satellite internet services to your customers with full support from our team.",
+    "breadcrumb": "Resellers",
+    "benefits": [
+      {
+        "title": "Competitive margins",
+        "description": "Earn tiered commissions as your sales volume grows."
+      },
+      {
+        "title": "Regional exclusivity",
+        "description": "Exclusive distribution rights in your approved geographic area."
+      },
+      {
+        "title": "Certified training",
+        "description": "Comprehensive technical and sales training programs for your team."
+      },
+      {
+        "title": "Marketing support",
+        "description": "Ready-made marketing materials and joint advertising campaigns."
+      },
+      {
+        "title": "Partner portal",
+        "description": "Dashboard to manage your customers, orders, and commissions."
+      },
+      {
+        "title": "24/7 technical support",
+        "description": "Dedicated partner support line around the clock."
+      }
+    ],
+    "applyTitle": "Submit a partnership application",
+    "applyDesc": "Fill out the form and our partnerships team will reach out to review your application.",
+    "sentTitle": "Your application was received",
+    "sentDesc": "We will review your partnership application and get back to you within 5 business days.",
+    "form": {
+      "company": "Company name",
+      "contact": "Contact person",
+      "email": "Email",
+      "phone": "Phone number",
+      "region": "Target geographic region",
+      "experience": "Your experience distributing telecom products (optional)",
+      "submit": "Submit partnership application"
+    },
+    "errors": {
+      "company": "Company name is required",
+      "contact": "Contact name is required",
+      "email": "Invalid email address",
+      "phone": "Invalid phone number",
+      "region": "Region is required",
+      "checkTitle": "Check your details"
+    },
+    "successTitle": "Partnership application received",
+    "successDesc": "Our team will review your application and contact you within 5 business days."
+  },
+  "reliability": {
+    "eyebrow": "Reliability",
+    "title": "Consistent, dependable performance",
+    "description": "Average uptime above 99.9% and reliable connectivity worldwide. Hardware built to withstand all weather conditions.",
+    "breadcrumb": "Reliability",
+    "stats": [
+      {
+        "n": "99.9%",
+        "l": "Average uptime"
+      },
+      {
+        "n": "150+",
+        "l": "Markets worldwide"
+      },
+      {
+        "n": "400+",
+        "l": "Mbps peak speeds"
+      }
+    ]
+  }
+}
