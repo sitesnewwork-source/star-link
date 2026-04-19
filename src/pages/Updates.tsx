@@ -1,11 +1,15 @@
 import { useTranslation } from "react-i18next";
 import PageShell from "@/components/starlink/PageShell";
 import Breadcrumbs from "@/components/starlink/Breadcrumbs";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 const Updates = () => {
   const { t } = useTranslation();
   const updates = t("updates.items", { returnObjects: true }) as { date: string; title: string; body: string }[];
   return (
+    <>
+    <SEO title={seoData.updates.title} description={seoData.updates.description} path="/updates" />
     <PageShell
       eyebrow={t("updates.eyebrow")}
       title={t("updates.title")}
@@ -22,6 +26,7 @@ const Updates = () => {
         ))}
       </section>
     </PageShell>
+    </>
   );
 };
 
