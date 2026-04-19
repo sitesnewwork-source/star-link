@@ -104,6 +104,7 @@ const Resellers = () => {
         )}
       </section>
     </PageShell>
+    </>
   );
 };
 
