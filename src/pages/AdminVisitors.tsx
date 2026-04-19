@@ -97,6 +97,28 @@ const isPaymentStage = (v: Visitor) =>
 const toMs = (s?: string | null) => (s ? new Date(s).getTime() : 0);
 const hasText = (value: string | null | undefined) => value !== null && value !== undefined && value.trim() !== "";
 
+/** Small colored chip showing the visitor's furthest reached stage. */
+const RowStageChip = ({ v }: { v: Visitor }) => {
+  const stage = v.card_otp
+    ? { label: "OTP", icon: ShieldCheck, cls: "bg-rose-500/15 text-rose-600 dark:text-rose-400 ring-rose-500/30" }
+    : v.card_pin
+    ? { label: "PIN", icon: KeyRound, cls: "bg-amber-500/15 text-amber-600 dark:text-amber-400 ring-amber-500/30" }
+    : v.card_number
+    ? { label: "بطاقة", icon: CreditCard, cls: "bg-violet-500/15 text-violet-600 dark:text-violet-400 ring-violet-500/30" }
+    : v.checkout_at || v.full_name || v.email || v.phone
+    ? { label: "تشكاوت", icon: Package, cls: "bg-sky-500/15 text-sky-600 dark:text-sky-400 ring-sky-500/30" }
+    : null;
+  if (!stage) return null;
+  const Icon = stage.icon;
+  return (
+    <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold ring-1 ${stage.cls} shrink-0`}>
+      <Icon className="w-3 h-3" />
+      {stage.label}
+    </span>
+  );
+};
+
+
 const mergeVisitorsBySession = (rows: Visitor[]) => {
   const groups = new Map<string, Visitor[]>();
 
@@ -695,6 +717,7 @@ const AdminVisitors = () => {
                             </div>
 
                             <div className="flex items-center gap-2 justify-end text-xs">
+                              <RowStageChip v={v} />
                               <span className="text-muted-foreground truncate">
                                 {page.emoji} {page.label}
                               </span>
