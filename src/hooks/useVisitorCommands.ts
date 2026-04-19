@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { visitorClient as supabase } from "@/lib/visitorClient";
 import { getVisitorSessionId } from "@/hooks/useVisitorTracking";
 
 /**
