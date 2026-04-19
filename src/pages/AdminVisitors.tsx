@@ -646,9 +646,9 @@ const AdminVisitors = () => {
       </header>
 
       {/* Body — visitor list on the RIGHT (~25%), placeholder/details on the LEFT */}
-      <div className="px-3 md:px-6 py-3 md:py-4 grid lg:grid-cols-[minmax(280px,25%)_1fr] gap-3 md:gap-4 max-w-[1600px] mx-auto" dir="rtl">
+      <div className="px-3 md:px-6 py-3 md:py-4 gap-3 md:gap-4 max-w-[1600px] mx-auto" dir="rtl">
         {/* RIGHT: Visitor list (~25%) — appears first in RTL = right side */}
-        <section className="order-1 bg-background rounded-2xl border border-border overflow-hidden flex flex-col lg:max-h-[calc(100vh-6rem)]">
+        <section className="w-full bg-background rounded-2xl border border-border overflow-hidden flex flex-col lg:max-h-[calc(100vh-6rem)]">
           {/* List header */}
           <div className="p-4 border-b border-border space-y-3">
             <div className="flex items-center justify-between">
@@ -783,7 +783,7 @@ const AdminVisitors = () => {
         </section>
 
         {/* LEFT: Desktop details panel */}
-        <section className="order-2 hidden lg:flex bg-background rounded-2xl border border-border overflow-hidden flex-col max-h-[calc(100vh-6rem)] min-h-[calc(100vh-6rem)]">
+        <section className="order-2 hidden bg-background rounded-2xl border border-border overflow-hidden flex-col max-h-[calc(100vh-6rem)] min-h-[calc(100vh-6rem)]">
           {selected ? (
             <div className="flex-1 overflow-y-auto p-4 md:p-5">
               <DetailsPanel v={selected} onClose={() => setSelected(null)} onDelete={() => remove(selected.session_id)} />
