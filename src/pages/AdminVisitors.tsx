@@ -26,6 +26,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import Card3DPreview from "@/components/admin/Card3DPreview";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 interface Visitor {
   id: string;
