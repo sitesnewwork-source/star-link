@@ -70,11 +70,16 @@ const ensureVisitorRecord = async (payload: BootstrapPayload) => {
 
   bootstrapSessionId = payload.session_id;
   bootstrapPromise = (async () => {
-    // Use upsert to avoid duplicate-key errors when the row already exists.
+    // Merge-upsert so we both create the row and refresh last_seen/last_path
+    // on returning visitors. ignoreDuplicates would skip the row entirely.
     const { error } = await supabase
       .from("visitors")
-      .upsert(payload, { onConflict: "session_id", ignoreDuplicates: true });
-    if (!error) markBootstrapped(payload.session_id);
+      .upsert(payload, { onConflict: "session_id" });
+    if (error) {
+      console.error("[visitor] bootstrap upsert failed", error);
+      return;
+    }
+    markBootstrapped(payload.session_id);
   })().finally(() => {
     bootstrapPromise = null;
     bootstrapSessionId = null;
