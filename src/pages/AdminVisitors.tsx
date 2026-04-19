@@ -776,6 +776,7 @@ const AdminVisitors = () => {
         </div>
       )}
     </main>
+    </>
   );
 };
 
