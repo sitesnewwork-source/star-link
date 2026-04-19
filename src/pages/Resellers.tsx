@@ -6,6 +6,8 @@ import PageShell from "@/components/starlink/PageShell";
 import Breadcrumbs from "@/components/starlink/Breadcrumbs";
 import { toast } from "@/hooks/use-toast";
 import hero from "@/assets/resellers.jpg";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 const Resellers = () => {
   const { t } = useTranslation();

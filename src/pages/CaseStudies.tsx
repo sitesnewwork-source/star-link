@@ -108,6 +108,7 @@ const CaseStudies = () => {
         )}
       </section>
     </PageShell>
+    </>
   );
 };
 

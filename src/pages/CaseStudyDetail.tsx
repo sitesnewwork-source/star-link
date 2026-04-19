@@ -5,6 +5,7 @@ import PageShell from "@/components/starlink/PageShell";
 import Breadcrumbs from "@/components/starlink/Breadcrumbs";
 import fallbackHero from "@/assets/biz-cases.jpg";
 import { fetchCaseStudies, type CaseStudy } from "@/data/caseStudies";
+import SEO from "@/components/SEO";
 
 const CaseStudyDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -150,6 +151,7 @@ const CaseStudyDetail = () => {
         )}
       </section>
     </PageShell>
+    </>
   );
 };
 
