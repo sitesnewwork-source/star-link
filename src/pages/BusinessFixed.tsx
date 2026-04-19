@@ -24,6 +24,7 @@ const BusinessFixed = () => {
         { title: t("business.fixed.f6Title"), description: t("business.fixed.f6Desc") },
       ]}
     />
+    </>
   );
 };
 

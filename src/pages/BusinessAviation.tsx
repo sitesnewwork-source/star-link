@@ -24,6 +24,7 @@ const BusinessAviation = () => {
         { title: t("business.aviation.f6Title"), description: t("business.aviation.f6Desc") },
       ]}
     />
+    </>
   );
 };
 

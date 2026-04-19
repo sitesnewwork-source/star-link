@@ -24,6 +24,7 @@ const BusinessPrivateNetworking = () => {
         { title: t("business.privateNetworking.f6Title"), description: t("business.privateNetworking.f6Desc") },
       ]}
     />
+    </>
   );
 };
 

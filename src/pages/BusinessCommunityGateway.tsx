@@ -24,6 +24,7 @@ const BusinessCommunityGateway = () => {
         { title: t("business.communityGateway.f6Title"), description: t("business.communityGateway.f6Desc") },
       ]}
     />
+    </>
   );
 };
 

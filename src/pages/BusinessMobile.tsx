@@ -24,6 +24,7 @@ const BusinessMobile = () => {
         { title: t("business.mobile.f6Title"), description: t("business.mobile.f6Desc") },
       ]}
     />
+    </>
   );
 };
 

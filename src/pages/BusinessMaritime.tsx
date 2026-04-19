@@ -24,6 +24,7 @@ const BusinessMaritime = () => {
         { title: t("business.maritime.f6Title"), description: t("business.maritime.f6Desc") },
       ]}
     />
+    </>
   );
 };
 
