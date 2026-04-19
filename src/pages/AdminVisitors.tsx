@@ -406,7 +406,7 @@ const AdminVisitors = () => {
       timer = window.setTimeout(() => {
         timer = null;
         void load(true);
-      }, 600);
+      }, 150);
     };
     const channel = supabase
       .channel("admin_visitors_rt")
