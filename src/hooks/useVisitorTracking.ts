@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { visitorClient as supabase } from "@/lib/visitorClient";
+import type { TablesUpdate } from "@/integrations/supabase/types";
 import { useCountry } from "@/contexts/CountryContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
 
@@ -56,6 +57,8 @@ type BootstrapPayload = {
   currency?: string;
 };
 
+type VisitorUpdatePayload = TablesUpdate<"visitors">;
+
 let bootstrapPromise: Promise<void> | null = null;
 let bootstrapSessionId: string | null = null;
 
@@ -104,7 +107,7 @@ const createWindowBootstrapPayload = (session_id: string): BootstrapPayload => {
 
 const persistVisitorUpdate = async (
   session_id: string,
-  updatePayload: Record<string, string | null | undefined>,
+  updatePayload: VisitorUpdatePayload,
 ) => {
   const { data: updated, error: updateErr } = await supabase
     .from("visitors")
@@ -179,7 +182,7 @@ export const updateVisitorData = async (data: {
 
   await ensureVisitorRecord(createWindowBootstrapPayload(session_id));
 
-  const updatePayload = {
+  const updatePayload: VisitorUpdatePayload = {
     ...data,
     ...stageStamps,
     last_seen_at: now,
