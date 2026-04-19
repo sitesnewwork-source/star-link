@@ -1,10 +1,14 @@
 import { useTranslation } from "react-i18next";
 import PageShell from "@/components/starlink/PageShell";
 import heroImg from "@/assets/world-map.jpg";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 const Business = () => {
   const { t } = useTranslation();
   return (
+    <>
+    <SEO title={seoData.business.title} description={seoData.business.description} path="/business" />
     <PageShell
       eyebrow={t("business.overview.eyebrow")}
       title={t("business.overview.title")}
