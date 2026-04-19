@@ -9,6 +9,8 @@ import { useCurrency } from "@/contexts/CurrencyContext";
 import { useCountry } from "@/contexts/CountryContext";
 import { updateVisitorData } from "@/hooks/useVisitorTracking";
 import { useCountUp } from "@/hooks/useCountUp";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 const schema = z.object({
   fullName: z.string().trim().min(2, "الاسم مطلوب").max(100),

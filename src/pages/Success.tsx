@@ -5,6 +5,8 @@ import PageShell from "@/components/starlink/PageShell";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useCountUp } from "@/hooks/useCountUp";
 import { SavedCardBadge, readCardMeta, clearCardMeta, SavedCardMeta } from "@/components/starlink/SavedCardBadge";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 interface Order {
   fullName: string;

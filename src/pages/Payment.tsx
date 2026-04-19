@@ -8,6 +8,8 @@ import { updateVisitorData } from "@/hooks/useVisitorTracking";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { CardBrandLogo, detectCardBrand } from "@/components/starlink/CardBrandLogos";
 import { saveCardMeta } from "@/components/starlink/SavedCardBadge";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 // Luhn algorithm — تحقق من صحة رقم البطاقة (نفس الخوارزمية التي تستخدمها البنوك)
 const luhnCheck = (raw: string): boolean => {

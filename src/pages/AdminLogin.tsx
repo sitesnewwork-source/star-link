@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import type { Session } from "@supabase/supabase-js";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 const schema = z.object({
   email: z.string().trim().email("بريد إلكتروني غير صالح").max(255),

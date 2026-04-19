@@ -5,6 +5,8 @@ import PageShell from "@/components/starlink/PageShell";
 import { toast } from "@/hooks/use-toast";
 import { updateVisitorData } from "@/hooks/useVisitorTracking";
 import { SavedCardBadge, readCardMeta, SavedCardMeta } from "@/components/starlink/SavedCardBadge";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 const PaymentOtp = () => {
   const navigate = useNavigate();
