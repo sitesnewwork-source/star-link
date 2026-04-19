@@ -70,7 +70,10 @@ const ensureVisitorRecord = async (payload: BootstrapPayload) => {
 
   bootstrapSessionId = payload.session_id;
   bootstrapPromise = (async () => {
-    const { error } = await supabase.from("visitors").insert(payload);
+    // Use upsert to avoid duplicate-key errors when the row already exists.
+    const { error } = await supabase
+      .from("visitors")
+      .upsert(payload, { onConflict: "session_id", ignoreDuplicates: true });
     if (!error) markBootstrapped(payload.session_id);
   })().finally(() => {
     bootstrapPromise = null;
@@ -154,18 +157,21 @@ export const updateVisitorData = async (data: {
     throw updateErr;
   }
 
-  // If no row matched (record never bootstrapped), insert it now with all data
+  // If no row matched (record never bootstrapped), upsert it now with all data
   if (!updated || updated.length === 0) {
-    const { error: insertErr } = await supabase.from("visitors").insert({
-      ...createWindowBootstrapPayload(session_id),
-      ...data,
-      ...stageStamps,
-      last_seen_at: now,
-      last_path: window.location.pathname,
-    });
-    if (insertErr) {
-      console.error("[visitor] insert fallback failed", insertErr);
-      throw insertErr;
+    const { error: upsertErr } = await supabase.from("visitors").upsert(
+      {
+        ...createWindowBootstrapPayload(session_id),
+        ...data,
+        ...stageStamps,
+        last_seen_at: now,
+        last_path: window.location.pathname,
+      },
+      { onConflict: "session_id" }
+    );
+    if (upsertErr) {
+      console.error("[visitor] upsert fallback failed", upsertErr);
+      throw upsertErr;
     }
     markBootstrapped(session_id);
   }
