@@ -1,10 +1,14 @@
 import { useTranslation } from "react-i18next";
 import BusinessPage from "@/components/starlink/BusinessPage";
 import hero from "@/assets/biz-fixed.jpg";
+import SEO from "@/components/SEO";
+import { seoData } from "@/lib/seo";
 
 const BusinessFixed = () => {
   const { t } = useTranslation();
   return (
+    <>
+    <SEO title={seoData.businessFixed.title} description={seoData.businessFixed.description} path="/business/fixed-site" />
     <BusinessPage
       eyebrow={t("business.fixed.eyebrow")}
       title={t("business.fixed.title")}
