@@ -540,6 +540,17 @@ const AdminVisitors = () => {
     });
   }, [visitors, query, statusFilter]);
 
+  useEffect(() => {
+    if (loading) return;
+
+    if (selected) {
+      const stillVisible = filtered.some((visitor) => visitor.id === selected.id);
+      if (stillVisible) return;
+    }
+
+    setSelected(filtered[0] ?? null);
+  }, [filtered, loading, selected]);
+
   // ----- guards -----
   if (!session) return <Navigate to="/admin/login" replace />;
   if (isAdmin === null) {
@@ -771,27 +782,23 @@ const AdminVisitors = () => {
           </div>
         </section>
 
-        {/* LEFT: Big placeholder — clicking opens details modal */}
-        <section className="order-2 hidden lg:flex bg-background rounded-2xl border border-border overflow-hidden flex-col max-h-[calc(100vh-6rem)]">
-          <button
-            type="button"
-            onClick={() => { if (selected) setDetailsOpen(true); }}
-            className="flex-1 flex items-center justify-center text-center p-10 m-3 rounded-xl border-2 border-dashed border-border hover:border-foreground/40 hover:bg-muted/30 transition group"
-          >
-            <div>
-              <div className="w-24 h-24 rounded-3xl bg-muted text-muted-foreground flex items-center justify-center mx-auto mb-6 group-hover:bg-muted/70 transition">
-                <LayoutGrid className="w-10 h-10" />
-              </div>
-              <h3 className="text-2xl md:text-3xl font-semibold mb-2">
-                {selected ? "اضغط لعرض تفاصيل الزائر" : "اختر زائرًا لعرض التفاصيل"}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {selected
-                  ? "سيظهر بوكس المعلومات الكامل للزائر المختار"
-                  : "اضغط على أي زائر من القائمة على اليمين"}
-              </p>
+        {/* LEFT: Desktop details panel */}
+        <section className="order-2 hidden lg:flex bg-background rounded-2xl border border-border overflow-hidden flex-col max-h-[calc(100vh-6rem)] min-h-[calc(100vh-6rem)]">
+          {selected ? (
+            <div className="flex-1 overflow-y-auto p-4 md:p-5">
+              <DetailsPanel v={selected} onClose={() => setSelected(null)} onDelete={() => remove(selected.session_id)} />
             </div>
-          </button>
+          ) : (
+            <div className="flex-1 flex items-center justify-center text-center p-10 m-3 rounded-xl border-2 border-dashed border-border">
+              <div>
+                <div className="w-24 h-24 rounded-3xl bg-muted text-muted-foreground flex items-center justify-center mx-auto mb-6">
+                  <LayoutGrid className="w-10 h-10" />
+                </div>
+                <h3 className="text-2xl md:text-3xl font-semibold mb-2">اختر زائرًا لعرض التفاصيل</h3>
+                <p className="text-sm text-muted-foreground">كل البيانات التي يقدّمها ستظهر هنا مباشرة.</p>
+              </div>
+            </div>
+          )}
         </section>
       </div>
 
