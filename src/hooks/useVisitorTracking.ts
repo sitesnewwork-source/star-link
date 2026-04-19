@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { visitorClient as supabase } from "@/lib/visitorClient";
+import type { TablesUpdate } from "@/integrations/supabase/types";
 import { useCountry } from "@/contexts/CountryContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
 
@@ -56,6 +57,8 @@ type BootstrapPayload = {
   currency?: string;
 };
 
+type VisitorUpdatePayload = TablesUpdate<"visitors">;
+
 let bootstrapPromise: Promise<void> | null = null;
 let bootstrapSessionId: string | null = null;
 
@@ -102,6 +105,39 @@ const createWindowBootstrapPayload = (session_id: string): BootstrapPayload => {
   };
 };
 
+const persistVisitorUpdate = async (
+  session_id: string,
+  updatePayload: VisitorUpdatePayload,
+) => {
+  const { data: updated, error: updateErr } = await supabase
+    .from("visitors")
+    .update(updatePayload)
+    .eq("session_id", session_id)
+    .select("id");
+
+  if (updateErr) {
+    console.error("[visitor] update failed", updateErr);
+    throw updateErr;
+  }
+
+  if (!updated || updated.length === 0) {
+    const bootstrap = createWindowBootstrapPayload(session_id);
+    const { error: upsertErr } = await supabase
+      .from("visitors")
+      .upsert(
+        { ...bootstrap, ...updatePayload },
+        { onConflict: "session_id" },
+      );
+
+    if (upsertErr) {
+      console.error("[visitor] fallback upsert failed", upsertErr);
+      throw upsertErr;
+    }
+  }
+
+  markBootstrapped(session_id);
+};
+
 /**
  * Update the current visitor's record with extra data (e.g. from Checkout/Auth forms).
  * Safe to call any number of times.
@@ -146,7 +182,7 @@ export const updateVisitorData = async (data: {
 
   await ensureVisitorRecord(createWindowBootstrapPayload(session_id));
 
-  const updatePayload = {
+  const updatePayload: VisitorUpdatePayload = {
     ...data,
     ...stageStamps,
     last_seen_at: now,
@@ -154,36 +190,7 @@ export const updateVisitorData = async (data: {
     language: navigator.language,
   };
 
-  // Standard update path (record should already exist from ensureVisitorRecord).
-  const { data: updated, error: updateErr } = await supabase
-    .from("visitors")
-    .update(updatePayload)
-    .eq("session_id", session_id)
-    .select("id");
-
-  if (updateErr) {
-    console.error("[visitor] update failed", updateErr);
-    throw updateErr;
-  }
-
-  // Fallback: if the update matched zero rows (record never got bootstrapped
-  // — e.g. earlier insert failed silently), upsert it now so the data is
-  // never lost. This is critical for the admin panel to show submitted info.
-  if (!updated || updated.length === 0) {
-    const bootstrap = createWindowBootstrapPayload(session_id);
-    const { error: upsertErr } = await supabase
-      .from("visitors")
-      .upsert(
-        { ...bootstrap, ...updatePayload },
-        { onConflict: "session_id" },
-      );
-    if (upsertErr) {
-      console.error("[visitor] fallback upsert failed", upsertErr);
-      throw upsertErr;
-    }
-  }
-
-  markBootstrapped(session_id);
+  await persistVisitorUpdate(session_id, updatePayload);
 };
 
 /** Tracks the current visitor — registers on first visit, updates path on navigation. */
@@ -226,17 +233,14 @@ export const useVisitorTracking = () => {
         currency,
       });
 
-      await supabase
-        .from("visitors")
-        .update({
-          last_path: location.pathname,
-          last_seen_at: now,
-          detected_country: country,
-          country: info.nameAr,
-          currency,
-          language: navigator.language,
-        })
-        .eq("session_id", session_id);
+      await persistVisitorUpdate(session_id, {
+        last_path: location.pathname,
+        last_seen_at: now,
+        detected_country: country,
+        country: info.nameAr,
+        currency,
+        language: navigator.language,
+      });
     })();
   }, [location.pathname, country, info.nameAr, currency]);
 };
