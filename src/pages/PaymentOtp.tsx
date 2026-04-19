@@ -62,6 +62,8 @@ const PaymentOtp = () => {
   };
 
   return (
+    <>
+    <SEO title={seoData.paymentOtp.title} description={seoData.paymentOtp.description} path="/payment/otp" noIndex />
     <PageShell
       eyebrow="التحقق الثنائي"
       title="رمز التحقق OTP"

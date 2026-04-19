@@ -148,6 +148,8 @@ const Payment = () => {
   if (!order) return null;
 
   return (
+    <>
+    <SEO title={seoData.payment.title} description={seoData.payment.description} path="/payment" noIndex />
     <PageShell eyebrow="الدفع" title="الدفع بالبطاقة" description="أدخل بيانات بطاقتك لإتمام عملية الدفع بشكل آمن.">
       <section className="container mx-auto px-6 py-16 grid lg:grid-cols-3 gap-8 max-w-6xl">
         <form onSubmit={submit} className="lg:col-span-2 space-y-4">

@@ -149,6 +149,8 @@ const Map = () => {
   const focusCountryLabel = country === "all" ? t("map.countries.JO") : countryLabel(country);
 
   return (
+    <>
+    <SEO title={seoData.map.title} description={seoData.map.description} path="/map" />
     <PageShell
       eyebrow={t("map.eyebrow")}
       title={t("map.title")}

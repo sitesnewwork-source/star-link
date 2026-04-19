@@ -93,6 +93,8 @@ const Checkout = () => {
   const animatedSavings = useCountUp(finalSavings, 1400);
 
   return (
+    <>
+    <SEO title={seoData.checkout.title} description={seoData.checkout.description} path="/checkout" noIndex />
     <PageShell eyebrow="إتمام الطلب" title="معلومات التوصيل والباقة" description="أدخل عنوان التوصيل واختر باقتك للمتابعة إلى الدفع.">
       <section className="container mx-auto px-6 py-16 grid lg:grid-cols-3 gap-8 max-w-6xl">
         <form onSubmit={onSubmit} className="lg:col-span-2 space-y-4">

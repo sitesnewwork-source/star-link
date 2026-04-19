@@ -513,6 +513,8 @@ const AdminVisitors = () => {
   }
 
   return (
+    <>
+    <SEO title={seoData.adminVisitors.title} description={seoData.adminVisitors.description} path="/admin/visitors" noIndex />
     <main className="admin-light min-h-screen bg-muted/40 text-foreground" dir="rtl">
       {/* Top bar */}
       <header className="bg-background border-b border-border">

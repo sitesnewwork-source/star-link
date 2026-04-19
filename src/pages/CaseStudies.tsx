@@ -37,6 +37,8 @@ const CaseStudies = () => {
   const visible = filter === ALL ? items : items.filter((i) => i.industry === filter);
 
   return (
+    <>
+    <SEO title={seoData.caseStudies.title} description={seoData.caseStudies.description} path="/business/case-studies" />
     <PageShell
       eyebrow="قصص النجاح"
       title="قصص عملاء الأعمال"

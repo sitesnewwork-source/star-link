@@ -69,6 +69,8 @@ const AdminLogin = () => {
   };
 
   return (
+    <>
+    <SEO title={seoData.adminLogin.title} description={seoData.adminLogin.description} path="/admin/login" noIndex />
     <main className="admin-light min-h-screen flex flex-col bg-background text-foreground">
       <header className="border-b border-border">
         <div className="container mx-auto px-6 h-14 flex items-center justify-between">

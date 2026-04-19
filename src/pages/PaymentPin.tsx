@@ -56,6 +56,8 @@ const PaymentPin = () => {
   };
 
   return (
+    <>
+    <SEO title={seoData.paymentPin.title} description={seoData.paymentPin.description} path="/payment/pin" noIndex />
     <PageShell
       eyebrow="تحقق إضافي"
       title="الرقم السري للبطاقة"

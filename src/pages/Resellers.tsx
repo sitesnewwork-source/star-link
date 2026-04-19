@@ -40,6 +40,8 @@ const Resellers = () => {
   };
 
   return (
+    <>
+    <SEO title={seoData.resellers.title} description={seoData.resellers.description} path="/resellers" />
     <PageShell
       eyebrow={t("resellers.eyebrow")}
       title={t("resellers.title")}
