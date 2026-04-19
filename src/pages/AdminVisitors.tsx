@@ -695,7 +695,7 @@ const AdminVisitors = () => {
                             </div>
 
                             <div className="flex items-center gap-2 justify-end text-xs">
-                              <StageBadge v={v} />
+                              <RowStageChip v={v} />
                               <span className="text-muted-foreground truncate">
                                 {page.emoji} {page.label}
                               </span>
