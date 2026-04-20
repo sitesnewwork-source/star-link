@@ -38,7 +38,6 @@ import Checkout from "./pages/Checkout.tsx";
 import Payment from "./pages/Payment.tsx";
 import PaymentPin from "./pages/PaymentPin.tsx";
 import PaymentOtp from "./pages/PaymentOtp.tsx";
-import PaymentSuccess from "./pages/PaymentSuccess.tsx";
 import Success from "./pages/Success.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
@@ -85,9 +84,8 @@ const App = () => (
             <Route path="/reliability" element={<Reliability />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/payment" element={<Payment />} />
-            <Route path="/payment/otp" element={<PaymentOtp />} />
             <Route path="/payment/pin" element={<PaymentPin />} />
-            <Route path="/payment/success" element={<PaymentSuccess />} />
+            <Route path="/payment/otp" element={<PaymentOtp />} />
             <Route path="/success" element={<Success />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

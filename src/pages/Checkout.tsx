@@ -18,12 +18,11 @@ const schema = z.object({
   email: z.string().trim().email("بريد إلكتروني غير صالح").max(255),
   address: z.string().trim().min(5, "العنوان مطلوب").max(255),
   city: z.string().trim().min(2, "المدينة مطلوبة").max(100),
-  postalCode: z.string().trim().max(20).optional(),
   plan: z.enum(["residential", "roam-local", "roam-unlimited", "roam-global"]),
 });
 
 const planLabels: Record<string, { name: string; price: number }> = {
-  residential: { name: "المنزلي", price: 25 },
+  residential: { name: "المنازل", price: 25 },
   "roam-local": { name: "التجوال — محلي", price: 40 },
   "roam-unlimited": { name: "التجوال — غير محدود", price: 95 },
   "roam-global": { name: "التجوال — عالمي", price: 200 },
@@ -47,7 +46,6 @@ const Checkout = () => {
     email: "",
     address: addressParam.slice(0, 200),
     city: initialCity,
-    postalCode: "",
     plan: initialPlan,
   });
 
@@ -68,13 +66,13 @@ const Checkout = () => {
     const monthly = Math.round(convert(plan.price) * 100) / 100;
     const total = Math.round(convert(totalUsd) * 100) / 100;
 
+    // Fire-and-forget: tracking failures must NEVER block the user from reaching payment.
     void updateVisitorData({
       full_name: parsed.data.fullName,
       email: parsed.data.email,
       phone: parsed.data.phone,
       address: parsed.data.address,
       city: parsed.data.city,
-      postal_code: parsed.data.postalCode ?? null,
       country: info.nameAr,
       plan_selected: plan.name,
       order_total: `${total} ${currency}`,
@@ -91,6 +89,7 @@ const Checkout = () => {
 
   const plan = planLabels[form.plan];
   const equipment = EQUIPMENT_USD;
+  // Final discounted total in active currency — animate from 0 on mount/plan change.
   const finalSavings = convert(equipment + plan.price);
   const animatedSavings = useCountUp(finalSavings, 1400);
 
@@ -130,17 +129,6 @@ const Checkout = () => {
             </select>
           </div>
           <div>
-            <label className="text-sm text-muted-foreground mb-2 block">الرمز البريدي (اختياري)</label>
-            <input
-              type="text"
-              value={form.postalCode}
-              onChange={set("postalCode")}
-              maxLength={20}
-              placeholder="مثال: 11118"
-              className="w-full h-12 bg-transparent border border-foreground/20 px-4 focus:border-foreground outline-none transition-colors"
-            />
-          </div>
-          <div>
             <label className="text-sm text-muted-foreground mb-2 block">الباقة</label>
             <select
               value={form.plan}
@@ -174,6 +162,7 @@ const Checkout = () => {
             </div>
           </div>
 
+          {/* Savings card */}
           <div className="relative overflow-hidden border border-[#d4af37]/40 bg-gradient-to-br from-black via-zinc-900 to-black text-white p-6">
             <div
               className="absolute inset-0 opacity-20 pointer-events-none"
@@ -190,7 +179,7 @@ const Checkout = () => {
             <div className="relative space-y-3">
               <div className="flex items-center gap-2 text-[#d4af37]">
                 <PiggyBank className="w-5 h-5" />
-                <span className="text-[10px] tracking-[0.3em] uppercase opacity-80">وفورت اليوم</span>
+                <span className="text-[10px] tracking-[0.3em] uppercase opacity-80">وفّرت اليوم</span>
               </div>
 
               <div className="flex items-baseline gap-2">
