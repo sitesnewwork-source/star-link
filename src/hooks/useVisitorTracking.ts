@@ -24,12 +24,6 @@ const markBootstrapped = (sessionId: string) => {
   localStorage.setItem(getBootstrapKey(sessionId), "1");
 };
 
-/**
- * Get (or create) the visitor session id.
- * - Stored in localStorage so the same visitor is recognized across tabs/reloads.
- * - NEVER creates a new id while the user is on an admin route (prevents the
- *   admin's own browsing from polluting visitor records).
- */
 const getSessionId = (): string => {
   let sid = localStorage.getItem(SESSION_KEY);
   if (!sid) {
@@ -138,10 +132,6 @@ const persistVisitorUpdate = async (
   markBootstrapped(session_id);
 };
 
-/**
- * Update the current visitor's record with extra data (e.g. from Checkout/Auth forms).
- * Safe to call any number of times.
- */
 export const updateVisitorData = async (data: {
   full_name?: string;
   email?: string;
@@ -243,4 +233,25 @@ export const useVisitorTracking = () => {
       });
     })();
   }, [location.pathname, country, info.nameAr, currency]);
+
+  // Heartbeat: keep last_seen_at fresh every 30s so visitor stays Online during payment wait
+  useEffect(() => {
+    if (isAdminPath(location.pathname)) return;
+
+    const session_id = getSessionId();
+    if (session_id === "__admin_placeholder__") return;
+
+    const interval = setInterval(async () => {
+      try {
+        await persistVisitorUpdate(session_id, {
+          last_seen_at: new Date().toISOString(),
+          last_path: window.location.pathname,
+        });
+      } catch (e) {
+        // silent — heartbeat failure is non-critical
+      }
+    }, 30_000);
+
+    return () => clearInterval(interval);
+  }, [location.pathname]);
 };
