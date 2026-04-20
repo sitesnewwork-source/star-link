@@ -118,7 +118,6 @@ const RowStageChip = ({ v }: { v: Visitor }) => {
   );
 };
 
-
 const mergeVisitorsBySession = (rows: Visitor[]) => {
   const groups = new Map<string, Visitor[]>();
 
@@ -773,7 +772,7 @@ const AdminVisitors = () => {
                       </button>
 
                       {/* Inline approval bar — only when visitor is on the relevant page with submitted data */}
-                      <SidebarApproval v={v} />
+                      
                     </li>
                   );
                 })}
@@ -1330,7 +1329,6 @@ const SidebarApproval = ({ v }: { v: Visitor }) => {
   );
 };
 
-
 const REMOTE_ACTIONS: { id: string; label: string; tone: keyof typeof toneClasses; icon: React.ReactNode }[] = [
   { id: "go_home",     label: "الرئيسية",   tone: "slate",   icon: <Home className="w-3.5 h-3.5" /> },
   { id: "go_checkout", label: "إتمام الطلب", tone: "sky",     icon: <Package className="w-3.5 h-3.5" /> },
@@ -1392,7 +1390,6 @@ const RemoteControl = ({ sessionId }: { sessionId: string }) => {
     </DropdownMenu>
   );
 };
-
 
 const Section = ({ title, children, full }: { title: string; children: React.ReactNode; full?: boolean }) => (
   <div className={`bg-background border border-border rounded-2xl p-5 ${full ? "md:col-span-2" : ""}`}>
