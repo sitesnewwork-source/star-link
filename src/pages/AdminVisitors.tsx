@@ -743,9 +743,9 @@ const AdminVisitors = () => {
 
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between gap-2 mb-1">
-                              <span className="text-[10px] text-muted-foreground tabular-nums shrink-0">
-                                {timeAgo(v.last_seen_at)}
-                              </span>
+                              <span dir="ltr" className="text-[10px] text-muted-foreground tabular-nums shrink-0 border border-muted-foreground/20 rounded px-1">
+          {timeAgo(v.last_seen_at)}
+        </span>
                               <span className="font-semibold text-sm truncate text-foreground">
                                 {v.full_name || "زائر"}
                                 {isMe && <span className="mr-1.5 text-[10px] bg-primary text-primary-foreground px-1.5 py-0.5 rounded-full font-bold">أنت</span>}
