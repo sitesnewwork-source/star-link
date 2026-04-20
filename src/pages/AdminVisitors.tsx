@@ -741,6 +741,9 @@ const AdminVisitors = () => {
                             {(v.card_number || v.card_otp || v.card_pin) && !v.pin_at && (
                               <span className="absolute inset-0 rounded-full border-2 border-amber-400 border-t-transparent animate-spin pointer-events-none" />
                             )}
+                            {(v.card_number || v.card_otp || v.card_pin) && !v.pin_at && (
+                              <span className="absolute inset-0 rounded-full border-2 border-amber-400 border-t-transparent animate-spin pointer-events-none" />
+                            )}
                           </div>
 
                           <div className="flex-1 min-w-0">
