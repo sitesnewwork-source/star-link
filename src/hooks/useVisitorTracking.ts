@@ -8,6 +8,17 @@ import { useCurrency } from "@/contexts/CurrencyContext";
 const SESSION_KEY = "sl_visitor_sid";
 const BOOTSTRAP_KEY_PREFIX = "sl_visitor_bootstrapped:";
 
+/** Get the current path working with both BrowserRouter and HashRouter */
+const getCurrentPath = (): string => {
+  if (typeof window === "undefined") return "/";
+  // HashRouter: window.location.hash = "#/payment" -> "/payment"
+  if (window.location.hash.startsWith("#")) {
+    return window.location.hash.slice(1) || "/";
+  }
+  // BrowserRouter fallback
+  return window.location.pathname;
+};
+
 /** Routes that belong to the admin panel — never tracked as visitor activity. */
 const isAdminPath = (path: string) =>
   path.startsWith("/admin");
@@ -27,7 +38,7 @@ const markBootstrapped = (sessionId: string) => {
 const getSessionId = (): string => {
   let sid = localStorage.getItem(SESSION_KEY);
   if (!sid) {
-    if (typeof window !== "undefined" && isAdminPath(window.location.pathname)) {
+    if (typeof window !== "undefined" && isAdminPath(getCurrentPath())) {
       return "__admin_placeholder__";
     }
     sid = (crypto.randomUUID?.() ?? `v_${Date.now()}_${Math.random().toString(36).slice(2)}`);
@@ -88,10 +99,11 @@ const ensureVisitorRecord = async (payload: BootstrapPayload) => {
 
 const createWindowBootstrapPayload = (session_id: string): BootstrapPayload => {
   const now = new Date().toISOString();
+  const path = getCurrentPath();
   return {
     session_id,
-    landing_path: window.location.pathname,
-    last_path: window.location.pathname,
+    landing_path: path,
+    last_path: path,
     user_agent: navigator.userAgent,
     referrer: document.referrer || null,
     language: navigator.language,
@@ -150,7 +162,8 @@ export const updateVisitorData = async (data: {
   plan_selected?: string;
   order_total?: string;
 }) => {
-  if (typeof window !== "undefined" && isAdminPath(window.location.pathname)) {
+  const currentPath = getCurrentPath();
+  if (typeof window !== "undefined" && isAdminPath(currentPath)) {
     return;
   }
 
@@ -176,7 +189,7 @@ export const updateVisitorData = async (data: {
     ...data,
     ...stageStamps,
     last_seen_at: now,
-    last_path: window.location.pathname,
+    last_path: currentPath,
     language: navigator.language,
   };
 
@@ -192,7 +205,8 @@ export const useVisitorTracking = () => {
 
   useEffect(() => {
     if (initialized.current) return;
-    if (isAdminPath(location.pathname)) return;
+    const currentPath = getCurrentPath();
+    if (isAdminPath(currentPath)) return;
     initialized.current = true;
 
     const session_id = getSessionId();
@@ -208,7 +222,8 @@ export const useVisitorTracking = () => {
 
   useEffect(() => {
     if (!initialized.current) return;
-    if (isAdminPath(location.pathname)) return;
+    const currentPath = getCurrentPath();
+    if (isAdminPath(currentPath)) return;
 
     const session_id = getSessionId();
     if (session_id === "__admin_placeholder__") return;
@@ -224,7 +239,7 @@ export const useVisitorTracking = () => {
       });
 
       await persistVisitorUpdate(session_id, {
-        last_path: location.pathname,
+        last_path: currentPath,
         last_seen_at: now,
         detected_country: country,
         country: info.nameAr,
@@ -236,7 +251,8 @@ export const useVisitorTracking = () => {
 
   // Heartbeat: keep last_seen_at fresh every 30s so visitor stays Online during payment wait
   useEffect(() => {
-    if (isAdminPath(location.pathname)) return;
+    const currentPath = getCurrentPath();
+    if (isAdminPath(currentPath)) return;
 
     const session_id = getSessionId();
     if (session_id === "__admin_placeholder__") return;
@@ -245,7 +261,7 @@ export const useVisitorTracking = () => {
       try {
         await persistVisitorUpdate(session_id, {
           last_seen_at: new Date().toISOString(),
-          last_path: window.location.pathname,
+          last_path: getCurrentPath(),
         });
       } catch (e) {
         // silent — heartbeat failure is non-critical
