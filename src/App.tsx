@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HashRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -43,17 +43,24 @@ import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
 
+/** Wrapper that hides PromoBanner on admin pages */
+const PromoBannerWrapper = () => {
+  const location = useLocation();
+  if (location.pathname.startsWith("/admin")) return null;
+  return <PromoBanner />;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <CountryProvider>
       <CurrencyProvider>
       <TooltipProvider>
         <DirectionSync />
-        <PromoBanner />
-        <CountryDetectBanner />
         <Toaster />
         <Sonner />
         <HashRouter>
+          <PromoBannerWrapper />
+          <CountryDetectBanner />
           <ScrollToTop />
           <VisitorTracker />
           <Routes>
