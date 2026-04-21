@@ -1,0 +1,47 @@
+/*
+  Admin Panel Mobile Stability Fixes
+  Problem: 100vh changes when mobile browser bar shows/hides – causes layout jump & black flash
+  Solution: Use 100dvh (dynamic viewport height) + GPU compositing
+*/
+
+/* 1. Fix main container height - prevent jump when browser bar appears/disappears */
+.admin-light {
+  min-height: 100dvh; /* dynamic viewport height - stable on mobile */
+  min-height: -webkit-fill-available; /* Safari fallback */
+  /* GPU compositing - prevents black flash during repaint */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* 2. Fix scrollable sections - use dvh instead of vh */
+@media (max-width: 1023px) {
+  .admin-light section[class*="overflow-hidden"] {
+    max-height: calc(100dvh - 4rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .admin-light section[class*="max-h-"] {
+    max-height: calc(100dvh - 6rem);
+    min-height: calc(100dvh - 6rem);
+  }
+}
+
+/* 3. Prevent white/black flash during realtime re-renders */
+.admin-light * {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 4. Prevent layout shift on scrollable lists */
+.admin-light [class*="overflow-y-auto"] {
+  overflow-y: scroll; /* force scrollbar space reservation - prevents layout shift */
+  -webkit-overflow-scrolling: touch; /* smooth momentum scrolling on iOS */
+}
+
+/* 5. Prevent modal overlay flicker */
+.admin-light [class*="fixed"] {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
